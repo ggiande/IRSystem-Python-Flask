@@ -7,8 +7,16 @@ from kivy.uix.textinput import TextInput
 
 
 class MainWindow(GridLayout):
-    # runs on initialization
+    """
+    The main controller of the Kivy framework for the initial window.
+    """
+
     def __init__(self, **kwargs):
+        """
+        Runs on initialization. Includes all the stying used to generate the initial window.
+        Generates the widgets for the end user interaction.
+        :param kwargs: pass a keyworded variable length of arguments upon initialization
+        """
         super().__init__(**kwargs)
 
         self.window = GridLayout
@@ -39,7 +47,14 @@ class MainWindow(GridLayout):
         self.button.bind(on_press=self.callback)
         self.add_widget(self.button)
 
-    def callback(self, instance):
+    def callback(self, instance) -> None:
+        """
+        Calls the element/widget after processing the input specifically for the text widget.
+        Note, this requires the instance to be passed as an argument, code breaking without.
+        :param instance: instance of the window
+        :return:
+        """
+
         self.greeting.text = "An " + self.user.text + " is in stock!"
 
         info = self.user.text + "!"
@@ -50,7 +65,14 @@ class MainWindow(GridLayout):
 
 
 class SecondWindow(Screen):
-    def __init__(self, **kwargs):
+    """
+    The main controller of the Kivy framework for the second window.
+    """
+    def __init__(self, **kwargs) -> None:
+        """
+        Generates the second window after input is acknowledged and processed.
+        :param kwargs: pass a keyworded variable length of arguments upon initialization
+        """
         super().__init__(**kwargs)
         self.cols = 1
         self.message = Label(
@@ -61,15 +83,32 @@ class SecondWindow(Screen):
         self.message.bind(width=self.update_text_width)
         self.add_widget(self.message)
 
-    def update_info(self, message):
+    def update_info(self, message: str) -> None:
+        """
+        Update's the information that processes the input
+        :param message:
+        :return: None
+        """
         self.message.text = message
 
-    def update_text_width(self, *_):
+    def update_text_width(self, *_) -> None:
+        """
+        Updates the text's width; responsive text size
+        :param _: declared variable that is ignored.
+        :return: None
+        """
         self.message.text_size = (self.message.width * 0.85, None)
 
 
 class MyMainApp(App):
+    """
+    Main class of the module that is self calling upon the script running
+    """
     def build(self):
+        """
+        Loads the screen managers for each window and builds the interface
+        :return: ScreenManager; controller of windows
+        """
         self.screen_manager = ScreenManager()
 
         self.main_window = MainWindow()
@@ -85,7 +124,9 @@ class MyMainApp(App):
         return self.screen_manager
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    """
+    Runs the script
+    """
     instance_app = MyMainApp()
     instance_app.run()
