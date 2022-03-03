@@ -1,7 +1,7 @@
 import unittest
 from word import Word
 
-
+# TODO: Add docstrings
 class TestWord(unittest.TestCase):
 
     def test_initial_value(self):
@@ -13,7 +13,8 @@ class TestWord(unittest.TestCase):
 
     def test_clear_word(self):
         word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.clear_word(), None)
+        self.assertEqual(word1.clear_word(), "")
+#         None = ""
 
 
 if __name__ == '__main__':
