@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 # Migrate public to private
 class Word:
     """
@@ -18,53 +19,122 @@ class Word:
         :param text_value: str Literal string for searching
         :param word_snippets: [str] List of words near each instance of word
         """
-        self.relevant_docs = relevant_docs
-        self.text_value = text_value
-        self.word_snippets = word_snippets
-        self.num_occurrences = num_occurrences
+        self._relevant_docs = relevant_docs
+        self._text_value = text_value
+        self._word_snippets = word_snippets
+        self._num_occurrences = num_occurrences
 
-    def read_word_text_value(self) -> str:
+    @property
+    def relevant_docs_content(self) -> [str]:
         """
-        :param self: instance of Word
-        :return: str returns the text of the word
+        This is a list of documents that are relevant to our word
+        :param self instance of Word
+        :return: str returns the _relevant_docs of the word
         """
-        return self.text_value
+        print(f"Getting the list of relevant documents for {self._text_value}")
+        return self._relevant_docs
 
-    def delete_word_text_value(self) -> None:
+    @relevant_docs_content.setter
+    def relevant_docs_content(self, docs: [str]) -> None:
         """
-        Clears the assignment of text_value to an empty string
-        :param self: instance of Word
+        Sets a new list of _relevant_docs for a word in Word
+        :param self instance of Word
+        :param: docs the new list of relevant documents to replace _relevant_docs
         :return: None
         """
-        self.text_value = None
+        print(f"Setting a new list of relevant documents for {self._text_value}")
+        self._relevant_docs = docs
 
-    def read_num_occurrences(self) -> int:
+
+    @property
+    def text_value_content(self) -> str:
         """
-        :param self: instance of Word
+        This is the text value property of the word
+        :param self instance of Word
+        :return: str returns the _text_value of the word
+        """
+        print(f"Getting the word: {self._text_value}")
+        return self._text_value
+
+    @text_value_content.setter
+    def text_value_content(self, value: str) -> None:
+        """
+        Sets the text value property of the word
+        :param self instance of Word
+        :param: str value to replace the _text_value of the Word
+        :return: None
+        """
+        print(f"Setting {self._text_value} text value to {value!r}")
+        self._text_value = value
+
+    @text_value_content.deleter
+    def text_value_content(self) -> None:
+        """
+        Removes the text_value of the Word
+        :param self instance of Word
+        :return: None
+        """
+        print(f"Deleting {self._text_value} from Word")
+        del self._text_value
+
+    @property
+    def num_occurrences_content(self) -> int:
+        """
+        Returns the num_occurrences of a Word
+        :param self instance of Word
         :return: int returns the number of occurrences of the
-        word in all documents
+        Word in all documents
         """
-        return self.num_occurrences
+        print(f"Getting the number of occurrences for {self._text_value}")
+        return self._num_occurrences
 
+    @num_occurrences_content.setter
+    def num_occurrences_content(self, number: int):
+        """
+        Sets the num_occurrences for a word in Word
+        :param self instance of Word
+        :param number the number of occurrences of the
+        Word in all documents
+        """
+        print(f"Setting the number of occurrences for {self._text_value}")
+        self._num_occurrences = number
+
+    @num_occurrences_content.deleter
     def delete_num_occurrences(self) -> None:
         """
-        Clears the assignment of num_occurrences to None
-        :param self: instance of Word
+        Removes the _num_occurrences of the Word
+        :param self instance of Word
         :return: None
         """
-        self.num_occurrences = None
+        print(f"Deleting the number of occurrences for {self._text_value}")
+        del self._num_occurrences
 
-    def read_word_snippets(self) -> [str]:
+    @property
+    def word_snippets_content(self) -> [str]:
         """
+        Gets the list of word snippets for a word
         :param self: instance of Word
         :return: str[] returns a list of words near
         the word if found in other documents
         """
-        return self.word_snippets
+        print(f"Getting the list of word snippets for {self._text_value}")
+        return self._word_snippets
 
-    def delete_word_snippets(self):
+    @word_snippets_content.setter
+    def word_snippets_content(self, snippets: [str]) -> None:
         """
-        Clears the list of word snippets
+        Sets a new list of _word_snippets for a word in Word
+        :param self instance of Word
+        :param snippets the new list of word snippets to replace _word_snippets
+        """
+        print(f"Setting a new list of word snippets for {self._text_value}")
+        self._word_snippets = snippets
+
+    @word_snippets_content.deleter
+    def word_snippets_content(self) -> None:
+        """
+        Removes the list of word snippets from Word
+        :param self instance of Word
         :return: None
         """
-        self.word_snippets = None
+        del self._word_snippets

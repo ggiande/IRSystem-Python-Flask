@@ -1,7 +1,7 @@
 import unittest
 from word import Word
 
-# TODO: Add docstrings
+# TODO: Add docstrings and REDO all function call
 class TestWord(unittest.TestCase):
 
     def test_initial_value(self):

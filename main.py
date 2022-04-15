@@ -5,15 +5,20 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
 
+# import controller1
+import controller1
+from controller1 import Controller1
+
 
 class MainWindow(GridLayout):
     """
-    The main controller of the Kivy framework for the initial window.
+    The main controller of the Kivy framework for the initial window
+    that inherits from the GridLayout.
     """
 
     def __init__(self, **kwargs):
         """
-        Runs on initialization. Includes all the stying used to generate the initial window.
+        Runs on initialization. Includes all the styling used to generate the initial window.
         Generates the widgets for the end user interaction.
         :param kwargs: pass a keyworded variable length of arguments upon initialization
         """
@@ -44,6 +49,8 @@ class MainWindow(GridLayout):
             bold=True,
             background_color='#00FFCE'
         )
+        # after creation of window
+        controller1.list_of_files(self)
         self.button.bind(on_press=self.callback)
         self.add_widget(self.button)
 
@@ -51,8 +58,9 @@ class MainWindow(GridLayout):
         """
         Calls the element/widget after processing the input specifically for the text widget.
         Note, this requires the instance to be passed as an argument, code breaking without.
-        :param instance: instance of the window
-        :return:
+        :param: instance: instance of the window
+        :param: self: instance of MainWindow
+        :return: No Return
         """
 
         self.greeting.text = "An " + self.user.text + " is in stock!"
@@ -68,6 +76,7 @@ class SecondWindow(Screen):
     """
     The main controller of the Kivy framework for the second window.
     """
+
     def __init__(self, **kwargs) -> None:
         """
         Generates the second window after input is acknowledged and processed.
@@ -104,6 +113,7 @@ class MyMainApp(App):
     """
     Main class of the module that is self calling upon the script running
     """
+
     def build(self):
         """
         Loads the screen managers for each window and builds the interface
