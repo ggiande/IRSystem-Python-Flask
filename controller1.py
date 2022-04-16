@@ -8,10 +8,8 @@ class Controller1:
     and the Kivy Interface
     """
 
-    def __init__(self, word, main) -> None:
-        self.word = word
-        self.view = main
-
+    def __init__(self) -> None:
+        self.irsystem = IRSystem()
         """
         Special method that replaces a constructor/__new()__
         :param relevant_docs: [str] List of document names where the word has appeared
@@ -21,12 +19,13 @@ class Controller1:
         """
 
     # read, organize the data, then another function should search an organized piece of data
-    # TODO: Controller should get called after UI finishes building to pre process the data
+    # Controller should get called after UI finishes building to pre process the data
 
-def list_of_files(self):
-    """
-    :return: returns an array of all the files in a directory
-    """
-    arr = os.listdir('kivy_venv/docs')
-    print(f"Here are all the files: {arr}")
-    IRSystem.build_system(self, arr)
+    def list_of_files(self):
+        """
+        Retrieves a list of files to be processed by the IRSystem
+        :return: None
+        """
+        arr = os.listdir('kivy_venv/docs')
+        print(f"Here are all the files: {arr}")
+        self.irsystem.build_system(arr)

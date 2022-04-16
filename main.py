@@ -4,10 +4,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
-
-# import controller1
-import controller1
 from controller1 import Controller1
+c = Controller1()
 
 
 class MainWindow(GridLayout):
@@ -50,7 +48,8 @@ class MainWindow(GridLayout):
             background_color='#00FFCE'
         )
         # after creation of window
-        controller1.list_of_files(self)
+        # TODO: Begin the pre processing of the files
+        c.list_of_files()
         self.button.bind(on_press=self.callback)
         self.add_widget(self.button)
 

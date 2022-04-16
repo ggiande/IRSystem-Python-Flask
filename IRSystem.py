@@ -54,7 +54,7 @@ class IRSystem(IRSystemABC):
                     # if we did not encounter this word before, then add it to the list of words
                     else:
                         word = Word(line, 1)
-                        word.list_files.append([file_path, 1])
+                        word._relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
         print("Restoring the path")
         os.chdir(cwd)
