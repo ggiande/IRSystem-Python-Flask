@@ -4,24 +4,22 @@ from __future__ import annotations
 class Word:
     """
     Word Model
-    # The list of files containing the word, the word, a lit of words near the word, count
+    # The list of files containing the word and count of appearances, the word, a lit of words near the word, count of occurrences of word in all files
     """
 
     def __init__(self,
-                 relevant_docs: [str] = None,
                  text_value: str = None,
-                 word_snippets: [str] = None,
-                 num_occurrences: int = 0) -> None:
+                 num_occurrences: int = 0,
+                 relevant_docs: [str] = None) -> None:
+
         """
         Special method that replaces a constructor/__new()__
         :param relevant_docs: [str] List of document names where the word has appeared
         :param num_occurrences: int The number of times this specific word has been spotted
         :param text_value: str Literal string for searching
-        :param word_snippets: [str] List of words near each instance of word
         """
-        self._relevant_docs = relevant_docs
+        self._relevant_docs = []
         self._text_value = text_value
-        self._word_snippets = word_snippets
         self._num_occurrences = num_occurrences
 
     @property
@@ -43,7 +41,7 @@ class Word:
         :return: None
         """
         print(f"Setting a new list of relevant documents for {self._text_value}")
-        self._relevant_docs = docs
+        self._relevant_docs.append(docs)
 
     @property
     def text_value_content(self) -> str:
@@ -88,7 +86,7 @@ class Word:
         return self._num_occurrences
 
     @num_occurrences_content.setter
-    def num_occurrences_content(self, number: int):
+    def num_occurrences_content(self, number: int) -> None:
         """
         Sets the num_occurrences for a word in Word
         :param self instance of Word
@@ -108,32 +106,32 @@ class Word:
         print(f"Deleting the number of occurrences for {self._text_value}")
         del self._num_occurrences
 
-    @property
-    def word_snippets_content(self) -> [str]:
-        """
-        Gets the list of word snippets for a word
-        :param self: instance of Word
-        :return: str[] returns a list of words near
-        the word if found in other documents
-        """
-        print(f"Getting the list of word snippets for {self._text_value}")
-        return self._word_snippets
+    # @property
+    # def word_snippets_content(self) -> [str]:
+    #     """
+    #     Gets the list of word snippets for a word
+    #     :param self: instance of Word
+    #     :return: str[] returns a list of words near
+    #     the word if found in other documents
+    #     """
+    #     print(f"Getting the list of word snippets for {self._text_value}")
+    #     return self._word_snippets
 
-    @word_snippets_content.setter
-    def word_snippets_content(self, snippets: [str]) -> None:
-        """
-        Sets a new list of _word_snippets for a word in Word
-        :param self instance of Word
-        :param snippets the new list of word snippets to replace _word_snippets
-        """
-        print(f"Setting a new list of word snippets for {self._text_value}")
-        self._word_snippets = snippets
-
-    @word_snippets_content.deleter
-    def word_snippets_content(self) -> None:
-        """
-        Removes the list of word snippets from Word
-        :param self instance of Word
-        :return: None
-        """
-        del self._word_snippets
+    # @word_snippets_content.setter
+    # def word_snippets_content(self, snippets: [str]) -> None:
+    #     """
+    #     Sets a new list of _word_snippets for a word in Word
+    #     :param self instance of Word
+    #     :param snippets the new list of word snippets to replace _word_snippets
+    #     """
+    #     print(f"Setting a new list of word snippets for {self._text_value}")
+    #     self._word_snippets = snippets
+    #
+    # @word_snippets_content.deleter
+    # def word_snippets_content(self) -> None:
+    #     """
+    #     Removes the list of word snippets from Word
+    #     :param self instance of Word
+    #     :return: None
+    #     """
+    #     del self._word_snippets

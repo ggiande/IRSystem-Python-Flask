@@ -49,7 +49,7 @@ class IRSystemABC(ABC):
     # word frequency of each word
     def words_total_count(self):
         for word in self.list_words:
-            self.total += word.count
+            self.total += word.num_occurrences_content
 
     # String representation of the system
 

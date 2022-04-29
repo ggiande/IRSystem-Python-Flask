@@ -43,22 +43,24 @@ class IRSystem(IRSystemABC):
                     # then check if the file we are working in was encountered before
                     # with for that word
                     if len(entry):
-                        entry[0].count += 1
-                        entry_file = [f for f in entry[0].list_files if f[0] == file_path]
+                        entry[0].num_occurrences_content += 1
+                        entry_file = [f for f in entry[0].relevant_docs_content if f[0] == file_path]
                         # If the file was encountered before, increment the counter for that file
                         if len(entry_file):
                             entry_file[0][1] += 1
                         # If it was not encountered before, then add this file to that word
                         else:
-                            entry[0].list_files.append([file_path, 1])
+                            entry[0].relevant_docs_content.append([file_path, 1])
                     # if we did not encounter this word before, then add it to the list of words
                     else:
+                        # line is the word
+                        # int is the count
+                        #
                         # relevant_docs: [str] = None,
                         # text_value: str = None,
-                        # word_snippets: [str] = None,
                         # num_occurrences: int = 0) -> None:
-                        word = Word(line, 1)
-                        word._relevant_docs.append([file_path, 1])
+                        word = Word(line, 1, [file_path, 1])
+                        # word.relevant_docs_content.append([file_path, 1])
                         self.list_words.append(word)
         print("Restoring the path")
         os.chdir(cwd)
@@ -68,7 +70,7 @@ class IRSystem(IRSystemABC):
         """
         Helper method for build_system method
         """
-        return [w for w in self.list_words if w.word == word]
+        return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query):
         """
@@ -100,4 +102,4 @@ class IRSystem(IRSystemABC):
         """
         entry = self.word_search(word)
         if len(entry):
-            return (entry[0].count * 100 / self.total)
+            return entry[0].count * 100 / self.total
