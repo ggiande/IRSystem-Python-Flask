@@ -53,6 +53,10 @@ class IRSystem(IRSystemABC):
                             entry[0].list_files.append([file_path, 1])
                     # if we did not encounter this word before, then add it to the list of words
                     else:
+                        # relevant_docs: [str] = None,
+                        # text_value: str = None,
+                        # word_snippets: [str] = None,
+                        # num_occurrences: int = 0) -> None:
                         word = Word(line, 1)
                         word._relevant_docs.append([file_path, 1])
                         self.list_words.append(word)

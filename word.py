@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 
-# Migrate public to private
 class Word:
     """
     Word Model
+    # The list of files containing the word, the word, a lit of words near the word, count
     """
 
     def __init__(self,
@@ -44,7 +44,6 @@ class Word:
         """
         print(f"Setting a new list of relevant documents for {self._text_value}")
         self._relevant_docs = docs
-
 
     @property
     def text_value_content(self) -> str:
