@@ -48,8 +48,8 @@ class MainWindow(GridLayout):
             background_color='#00FFCE'
         )
         # after creation of window
-        # TODO: Begin the pre processing of the files
-        c.list_of_files()
+        # Begin the pre-processing of the files
+        c.process_files()
         self.button.bind(on_press=self.callback)
         self.add_widget(self.button)
 
@@ -62,13 +62,18 @@ class MainWindow(GridLayout):
         :return: No Return
         """
 
-        self.greeting.text = "An " + self.user.text + " is in stock!"
+        self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
+        word = self.user.text
 
-        info = self.user.text + "!"
+        # if self.user.text == "banana":
+        #     instance_app.second_window.update_info(word)
+        #     instance_app.screen_manager.current = "SecondWindow"
 
-        if self.user.text == "banana":
-            instance_app.second_window.update_info(info)
-            instance_app.screen_manager.current = "SecondWindow"
+#         TODO: If word is inside of the preprocess data, then print the word and count
+#             TODO: Send the word to the controller to fetch data
+        print(f"Main - Word_Freq: {c.retrieve_data(word)}")
+
+        # print("You entered: ")
 
 
 class SecondWindow(Screen):

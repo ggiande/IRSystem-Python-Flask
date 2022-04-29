@@ -27,9 +27,9 @@ class IRSystem(IRSystemABC):
         Fully processes the files for us
         """
         # TODO: try catch that os works for curr dir
-        print("in build system")
+        print("Preprocessing all data, this may take a while")
         cwd = os.getcwd()
-        os.chdir('kivy_venv/docs')
+        os.chdir('kivy_venv/scripts')
 
         self.list_files = list_files
         for file_path in self.list_files:
@@ -53,34 +53,39 @@ class IRSystem(IRSystemABC):
                             entry[0].relevant_docs_content.append([file_path, 1])
                     # if we did not encounter this word before, then add it to the list of words
                     else:
-                        # line is the word
-                        # int is the count
-                        #
-                        # relevant_docs: [str] = None,
-                        # text_value: str = None,
-                        # num_occurrences: int = 0) -> None:
-                        word = Word(line, 1, [file_path, 1])
-                        # word.relevant_docs_content.append([file_path, 1])
+                        word = Word(line, 1)
+                        word.relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
+
         print("Restoring the path")
         os.chdir(cwd)
         super().words_total_count()
+        print("Completed processing all files")
+        print(type(self.list_words[0]))
+        # print(f"list_words: {self.list_words[0]}")
 
     def word_search(self, word):
         """
         Helper method for build_system method
         """
+        print("WORD_SEARCH")
+        print([w for w in self.list_words if w.text_value_content == word])
+
         return [w for w in self.list_words if w.text_value_content == word]
 
-    def query_search(self, query):
+    def query_search(self, query) -> [str]:
         """
         Method returns data associated with Word
+        :param query can be a word or words to look for in the processed files
+        :return an overlap list of strings
         """
         words = query.split()
+        print(f"Inside IRSystem, Query, Words: {words}")
         results_files = []
 
         # search for each word in the query and return the list of files for that word
         for w in words:
+
             word_search = self.word_search(w)
             # if the word exists, then add the list of files to the results
             if len(word_search):
@@ -90,6 +95,7 @@ class IRSystem(IRSystemABC):
         # if there is no overlap, then the list will be empty
         overlap = []
         if len(results_files):
+            print("QUERY SEARCH, RESULT FILES")
             overlap = set(results_files[0]).intersection(*results_files[1:])
         return overlap
 
@@ -102,4 +108,4 @@ class IRSystem(IRSystemABC):
         """
         entry = self.word_search(word)
         if len(entry):
-            return entry[0].count * 100 / self.total
+            return entry[0].num_occurrences_content * 100 / self.total

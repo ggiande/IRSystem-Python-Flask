@@ -12,20 +12,29 @@ class Controller1:
         self.irsystem = IRSystem()
         """
         Special method that replaces a constructor/__new()__
-        :param relevant_docs: [str] List of document names where the word has appeared
-        :param num_occurrences: int The number of times this specific word has been spotted
-        :param text_value: str Literal string for searching
-        :param word_snippets: [str] List of words near each instance of word    
         """
 
     # read, organize the data, then another function should search an organized piece of data
     # Controller should get called after UI finishes building to pre process the data
 
-    def list_of_files(self):
+    def process_files(self):
         """
-        Retrieves a list of files to be processed by the IRSystem
+        Pre Process a list of files using the IRSystem
         :return: None
         """
-        arr = os.listdir('kivy_venv/docs')
-        print(f"Here are all the files: {arr}")
+        arr = os.listdir('kivy_venv/scripts')
+        # print(f"Here are all the files: {arr}")
         self.irsystem.build_system(arr)
+
+    def retrieve_data(self, word: str) -> [str]:
+        """
+        Given word from input, returns available data to user
+        If data can be retrieved, do something
+        :return:
+        """
+        print(f"Query for IRSystem: {word}")
+        # print("Inside controller, printing query results", self.irsystem.query_search(word))
+        # return self.irsystem.query_search(word)
+        return self.irsystem.word_frequency(word), self.irsystem.query_search(word)
+
+

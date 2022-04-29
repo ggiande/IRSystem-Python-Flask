@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Optional
+
 
 class Word:
     """
@@ -8,9 +10,9 @@ class Word:
     """
 
     def __init__(self,
-                 text_value: str = None,
-                 num_occurrences: int = 0,
-                 relevant_docs: [str] = None) -> None:
+                 text_value: str,
+                 num_occurrences: int,
+                 ) -> None:
 
         """
         Special method that replaces a constructor/__new()__
@@ -18,7 +20,7 @@ class Word:
         :param num_occurrences: int The number of times this specific word has been spotted
         :param text_value: str Literal string for searching
         """
-        self._relevant_docs = []
+        self.relevant_docs = []
         self._text_value = text_value
         self._num_occurrences = num_occurrences
 
@@ -29,8 +31,8 @@ class Word:
         :param self instance of Word
         :return: str returns the _relevant_docs of the word
         """
-        print(f"Getting the list of relevant documents for {self._text_value}")
-        return self._relevant_docs
+        # print(f"Getting the list of relevant documents for {self._text_value}")
+        return self.relevant_docs
 
     @relevant_docs_content.setter
     def relevant_docs_content(self, docs: [str]) -> None:
@@ -40,8 +42,9 @@ class Word:
         :param: docs the new list of relevant documents to replace _relevant_docs
         :return: None
         """
-        print(f"Setting a new list of relevant documents for {self._text_value}")
-        self._relevant_docs.append(docs)
+        # print(f"Setting a new list of relevant documents for {self._text_value}")
+        self.relevant_docs.append(docs)
+
 
     @property
     def text_value_content(self) -> str:
@@ -50,7 +53,7 @@ class Word:
         :param self instance of Word
         :return: str returns the _text_value of the word
         """
-        print(f"Getting the word: {self._text_value}")
+        # print(f"Getting the word: {self._text_value}")
         return self._text_value
 
     @text_value_content.setter
@@ -61,7 +64,7 @@ class Word:
         :param: str value to replace the _text_value of the Word
         :return: None
         """
-        print(f"Setting {self._text_value} text value to {value!r}")
+        # print(f"Setting {self._text_value} text value to {value!r}")
         self._text_value = value
 
     @text_value_content.deleter
@@ -71,7 +74,7 @@ class Word:
         :param self instance of Word
         :return: None
         """
-        print(f"Deleting {self._text_value} from Word")
+        # print(f"Deleting {self._text_value} from Word")
         del self._text_value
 
     @property
@@ -82,7 +85,7 @@ class Word:
         :return: int returns the number of occurrences of the
         Word in all documents
         """
-        print(f"Getting the number of occurrences for {self._text_value}")
+        # print(f"Getting the number of occurrences for {self._text_value}")
         return self._num_occurrences
 
     @num_occurrences_content.setter
@@ -93,7 +96,7 @@ class Word:
         :param number the number of occurrences of the
         Word in all documents
         """
-        print(f"Setting the number of occurrences for {self._text_value}")
+        # print(f"Setting the number of occurrences for {self._text_value}")
         self._num_occurrences = number
 
     @num_occurrences_content.deleter
@@ -103,7 +106,7 @@ class Word:
         :param self instance of Word
         :return: None
         """
-        print(f"Deleting the number of occurrences for {self._text_value}")
+        # print(f"Deleting the number of occurrences for {self._text_value}")
         del self._num_occurrences
 
     # @property
