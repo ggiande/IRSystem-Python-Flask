@@ -13,7 +13,6 @@ class Word:
                  text_value: str,
                  num_occurrences: int,
                  ) -> None:
-
         """
         Special method that replaces a constructor/__new()__
         :param relevant_docs: [str] List of document names where the word has appeared
@@ -99,6 +98,7 @@ class Word:
         # print(f"Setting the number of occurrences for {self._text_value}")
         self._num_occurrences = number
 
+    # num_occurrences_content, try to use it
     @num_occurrences_content.deleter
     def delete_num_occurrences(self) -> None:
         """

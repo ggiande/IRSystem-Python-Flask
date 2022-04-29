@@ -32,7 +32,7 @@ class Controller1:
         If data can be retrieved, do something
         :return:
         """
-        print(f"Query for IRSystem: {word}")
+        print(f"Controller: {word} Calling for word_freq and query_search")
         # print("Inside controller, printing query results", self.irsystem.query_search(word))
         # return self.irsystem.query_search(word)
         return self.irsystem.word_frequency(word), self.irsystem.query_search(word)

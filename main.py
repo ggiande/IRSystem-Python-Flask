@@ -71,7 +71,7 @@ class MainWindow(GridLayout):
 
 #         TODO: If word is inside of the preprocess data, then print the word and count
 #             TODO: Send the word to the controller to fetch data
-        print(f"Main - Word_Freq: {c.retrieve_data(word)}")
+        print(f"Main: {c.retrieve_data(word)}")
 
         # print("You entered: ")
 

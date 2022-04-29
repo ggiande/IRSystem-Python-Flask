@@ -36,7 +36,8 @@ class IRSystem(IRSystemABC):
             with open(file_path) as file:  # open file
                 for line in file:  # iterate through all lines (words) in the file
                     line = line.strip('\n')  # remove the trailing newlines
-
+                    # TODO: .split()
+                    print(f"Line should be a single word {line}")
                     # Check if the word exists in the list of words
                     entry = self.word_search(line)
                     # If the word was encountered before, then we need to increment the count
@@ -61,16 +62,14 @@ class IRSystem(IRSystemABC):
         os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
-        print(type(self.list_words[0]))
+        # print(type(self.list_words[0]))
         # print(f"list_words: {self.list_words[0]}")
 
     def word_search(self, word):
         """
         Helper method for build_system method
         """
-        print("WORD_SEARCH")
-        print([w for w in self.list_words if w.text_value_content == word])
-
+        print("IRSys, WORD_SEARCH")
         return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query) -> [str]:
@@ -79,23 +78,25 @@ class IRSystem(IRSystemABC):
         :param query can be a word or words to look for in the processed files
         :return an overlap list of strings
         """
+        print("IRSys, QUERY_SEARCH")
         words = query.split()
-        print(f"Inside IRSystem, Query, Words: {words}")
-        results_files = []
+        # print(f"Inside IRSystem, Query, Words: {words}")
+        results_files = [["file.txt", "file2.txt"], ["file2.txt"]]
+
 
         # search for each word in the query and return the list of files for that word
-        for w in words:
-
-            word_search = self.word_search(w)
-            # if the word exists, then add the list of files to the results
-            if len(word_search):
-                results_files.append(word_search[0].get_list_of_files())
+        # for w in words:
+        #     word_search = self.word_search(w)
+        #     # if the word exists, then add the list of files to the results
+        #     if len(word_search):
+        #         results_files.append(word_search[0].relevant_docs_content)
 
         # overlap all the lists for the words then return only the overlap
         # if there is no overlap, then the list will be empty
         overlap = []
         if len(results_files):
             print("QUERY SEARCH, RESULT FILES")
+            print(results_files[0])
             overlap = set(results_files[0]).intersection(*results_files[1:])
         return overlap
 
@@ -109,3 +110,5 @@ class IRSystem(IRSystemABC):
         entry = self.word_search(word)
         if len(entry):
             return entry[0].num_occurrences_content * 100 / self.total
+        else:
+            print("No results found in word_search when checking for word_frequency")
