@@ -22,7 +22,7 @@ class Controller1:
         Pre Process a list of files using the IRSystem
         :return: None
         """
-        arr = os.listdir('kivy_venv/scripts')
+        arr = os.listdir('kivy_venv/movie_scripts')
         # print(f"Here are all the files: {arr}")
         self.irsystem.build_system(arr)
 
@@ -34,7 +34,6 @@ class Controller1:
         """
         print(f"Controller: {word} Calling for word_freq and query_search")
         # print("Inside controller, printing query results", self.irsystem.query_search(word))
-        # return self.irsystem.query_search(word)
         return self.irsystem.word_frequency(word), self.irsystem.query_search(word)
 
 

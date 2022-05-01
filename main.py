@@ -7,7 +7,6 @@ from kivy.uix.textinput import TextInput
 from controller1 import Controller1
 c = Controller1()
 
-
 class MainWindow(GridLayout):
     """
     The main controller of the Kivy framework for the initial window

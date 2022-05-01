@@ -6,7 +6,27 @@ to the text.
 
 ## Set Up
 This application requires the following requirements to be met
-before expecting a successful launch. Note that the following instructions
+before expecting a successful launch. 
+
+### Windows
+Make sure to run PyCharm using Administrator. To set up your terminal and pip, run the following command at least one time.
+`python -m pip install --upgrade pip setuptools virtualenv`
+
+Create a virtual environment named kivy_venv in your current directory only one time:
+`python -m virtualenv kivy_venv`
+
+Activate the virtual environment. You will have to do this step from the current directory every time you start a new terminal. This sets up the environment so the new kivy_venv Python is used.
+
+For Windows default CMD, in the command line do:
+`kivy_venv\Scripts\activate`
+
+If you are in a bash terminal on Windows, instead do:
+`source kivy_venv/Scripts/activate`
+
+
+
+### OSX 
+Note that the following instructions
 are only for OSX. For other operating systems, read the documentation
 provided by the [Kivy Docs](https://kivy.org/doc/stable/gettingstarted/installation.html).
 There are multiple ways to `install` kivy, explore your best option.

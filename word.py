@@ -15,7 +15,7 @@ class Word:
                  ) -> None:
         """
         Special method that replaces a constructor/__new()__
-        :param relevant_docs: [str] List of document names where the word has appeared
+        # :param relevant_docs: [str] List of document names where the word has appeared
         :param num_occurrences: int The number of times this specific word has been spotted
         :param text_value: str Literal string for searching
         """

@@ -2,6 +2,7 @@
 # This class will take the list of files, open them,
 # process the words in the files, and build the IRSystem
 import os
+import re
 # TODO: Create test cases, create the main class
 
 from IRSystemABC import IRSystemABC
@@ -29,20 +30,27 @@ class IRSystem(IRSystemABC):
         # TODO: try catch that os works for curr dir
         print("Preprocessing all data, this may take a while")
         cwd = os.getcwd()
-        os.chdir('kivy_venv/scripts')
+        os.chdir('kivy_venv/movie_scripts')
 
         self.list_files = list_files
-        list_words = []
         for file_path in self.list_files:
-            with open(file_path) as file:  # open file
-                # TODO: Change the functionality to get a line first
-                for line in file:  # iterate through all lines (words) in the file -- Line by Line, expecting 1 word per line
-                    line = line.strip('\n')  # remove the trailing newlines
-                    list_words.append(line.split())
-                    # TODO: .split()
-                    print(f"Line should be a single word {line}")
-                    # Check if the word exists in the list of words
-                    entry = self.word_search(line)
+            with open(file_path, encoding="utf8", errors='ignore') as file:  # open file
+                # Retrieves all the words from a line
+                word_list = []
+                for line in file:  # iterate through all lines in the
+                    # file and store single words comma separated in an array
+
+                    mew_line = re.sub("[^a-zA-Z0-9\s]+", "", line)
+                    res = " ".join(mew_line.split())
+                    word_list.append(res)
+                    print(f"Line should be a single line: {res}")
+                # Sends a word into word_search
+                for single_word in word_list:  # iterate through single words
+                    # print(f"Line should be a single word: {single_word}")
+
+
+                 # Check if the word exists in the list of words
+                    entry = self.word_search(single_word)
                     # If the word was encountered before, then we need to increment the count
                     # then check if the file we are working in was encountered before
                     # with for that word
@@ -52,12 +60,12 @@ class IRSystem(IRSystemABC):
                         # If the file was encountered before, increment the counter for that file
                         if len(entry_file):
                             entry_file[0][1] += 1
-                        # If it was not encountered before, then add this file to that word
+                        # If it was not encountered before, then add  this file to that word
                         else:
                             entry[0].relevant_docs_content.append([file_path, 1])
                     # if we did not encounter this word before, then add it to the list of words
                     else:
-                        word = Word(line, 1)
+                        word = Word(single_word, 1)
                         word.relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
 
@@ -65,14 +73,13 @@ class IRSystem(IRSystemABC):
         os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
-        # print(type(self.list_words[0]))
-        # print(f"list_words: {self.list_words[0]}")
+        print(*self.list_words, sep='\n')
 
     def word_search(self, word):
         """
         Helper method for build_system method
         """
-        print("IRSys, WORD_SEARCH")
+        # print("IRSys, WORD_SEARCH")
         return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query) -> [str]:
@@ -86,7 +93,7 @@ class IRSystem(IRSystemABC):
         # print(f"Inside IRSystem, Query, Words: {words}")
         results_files = [["file.txt", "file2.txt"], ["file2.txt"]]
 
-
+        # TODO: Fix this
         # search for each word in the query and return the list of files for that word
         # for w in words:
         #     word_search = self.word_search(w)
