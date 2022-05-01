@@ -39,17 +39,13 @@ class IRSystem(IRSystemABC):
                 word_list = []
                 for line in file:  # iterate through all lines in the
                     # file and store single words comma separated in an array
-
-                    mew_line = re.sub("[^a-zA-Z0-9\s]+", "", line)
-                    res = " ".join(mew_line.split())
-                    word_list.append(res)
-                    print(f"Line should be a single line: {res}")
+                    line = re.sub("[^a-zA-Z0-9\s]+", "", line)
+                    line = " ".join(line.split())
+                    word_list.append(line)
+                    # print(f"Line should be a single line: {line}")
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
-                    # print(f"Line should be a single word: {single_word}")
-
-
-                 # Check if the word exists in the list of words
+                    # Check if the word exists in the list of words
                     entry = self.word_search(single_word)
                     # If the word was encountered before, then we need to increment the count
                     # then check if the file we are working in was encountered before
@@ -76,9 +72,8 @@ class IRSystem(IRSystemABC):
         # print(*self.list_words.__str__(), sep='\n')
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
-        for w in self.list_words:
-            print(w.text_value_content)
-
+        # for w in self.list_words:
+        #     print(w.text_value_content)
 
     def word_search(self, word):
         """
