@@ -32,10 +32,13 @@ class IRSystem(IRSystemABC):
         os.chdir('kivy_venv/scripts')
 
         self.list_files = list_files
+        list_words = []
         for file_path in self.list_files:
             with open(file_path) as file:  # open file
-                for line in file:  # iterate through all lines (words) in the file
+                # TODO: Change the functionality to get a line first
+                for line in file:  # iterate through all lines (words) in the file -- Line by Line, expecting 1 word per line
                     line = line.strip('\n')  # remove the trailing newlines
+                    list_words.append(line.split())
                     # TODO: .split()
                     print(f"Line should be a single word {line}")
                     # Check if the word exists in the list of words
