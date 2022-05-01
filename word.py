@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from typing import Optional
-
 
 class Word:
     """
     Word Model
-    # The list of files containing the word and count of appearances, the word, a lit of words near the word, count of occurrences of word in all files
+    # The list of files containing the word and count of appearances, the word, a lit of words near the word, count of
+    # occurrences of word in all files
     """
 
     def __init__(self,
@@ -31,7 +30,7 @@ class Word:
         :return: str returns the _relevant_docs of the word
         """
         # print(f"Getting the list of relevant documents for {self._text_value}")
-        return self.relevant_docs
+        return [f[0] for f in self.relevant_docs]
 
     @relevant_docs_content.setter
     def relevant_docs_content(self, docs: [str]) -> None:
@@ -43,7 +42,6 @@ class Word:
         """
         # print(f"Setting a new list of relevant documents for {self._text_value}")
         self.relevant_docs.append(docs)
-
 
     @property
     def text_value_content(self) -> str:

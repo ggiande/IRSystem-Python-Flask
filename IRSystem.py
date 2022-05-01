@@ -33,15 +33,20 @@ class IRSystem(IRSystemABC):
         os.chdir('kivy_venv/movie_scripts')
 
         self.list_files = list_files
+
         for file_path in self.list_files:
             with open(file_path, encoding="utf8", errors='ignore') as file:  # open file
                 # Retrieves all the words from a line
                 word_list = []
                 for line in file:  # iterate through all lines in the
                     # file and store single words comma separated in an array
-                    line = re.sub("[^a-zA-Z0-9\s]+", "", line)
-                    line = " ".join(line.split())
-                    word_list.append(line)
+                    line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
+                    line = line.split()
+
+                    # TODO: If new_line is not empty, then continue the logic below
+
+                    word_list += line
+                print(f"Word List:{word_list}")
                     # print(f"Line should be a single line: {line}")
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
@@ -65,7 +70,7 @@ class IRSystem(IRSystemABC):
                         word.relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
 
-        print("Restoring the path")
+        # print("Restoring the path")
         os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
@@ -75,11 +80,15 @@ class IRSystem(IRSystemABC):
         # for w in self.list_words:
         #     print(w.text_value_content)
 
-    def word_search(self, word):
+    def word_search(self, word) -> list:
         """
         Helper method for build_system method
+        :return: list of word instance
         """
-        # print("IRSys, WORD_SEARCH")
+        # print("IRSys, WORD_SEARCH Function")
+        # for w in self.list_words:
+        #     if w.text_value_content == word:
+        #         print("REPEATING:" + w.text_value_content)
         return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query) -> [str]:
@@ -88,18 +97,19 @@ class IRSystem(IRSystemABC):
         :param query can be a word or words to look for in the processed files
         :return an overlap list of strings
         """
-        print("IRSys, QUERY_SEARCH")
+        # print("IRSys, QUERY_SEARCH Function")
         words = query.split()
-        # print(f"Inside IRSystem, Query, Words: {words}")
-        results_files = [["file.txt", "file2.txt"], ["file2.txt"]]
+        print(f"Inside IRSystem, QUERY SEARCH Function, Words: {words}")
+        # results_files = [["file.txt", "file2.txt"], ["file2.txt"]]
+        results_files = []
 
         # TODO: Fix this
         # search for each word in the query and return the list of files for that word
-        # for w in words:
-        #     word_search = self.word_search(w)
-        #     # if the word exists, then add the list of files to the results
-        #     if len(word_search):
-        #         results_files.append(word_search[0].relevant_docs_content)
+        for dummy in words:
+            word_search = self.word_search(dummy) # holds an instance of word
+            # if the word exists, then add the list of files to the results
+            if len(word_search):
+                results_files.append(word_search[0].relevant_docs_content)
 
         # overlap all the lists for the words then return only the overlap
         # if there is no overlap, then the list will be empty
@@ -110,7 +120,7 @@ class IRSystem(IRSystemABC):
             overlap = set(results_files[0]).intersection(*results_files[1:])
         return overlap
 
-    def word_frequency(self, word) -> int:
+    def word_frequency(self, word) -> float:
         """
         Returns the frequency of a word
         If the word does not exist, then it returns a -1
@@ -119,6 +129,7 @@ class IRSystem(IRSystemABC):
         """
         entry = self.word_search(word)
         if len(entry):
+            print(f"num occur: {entry[0].num_occurrences_content} and the total is: {self.total}")
             return entry[0].num_occurrences_content * 100 / self.total
         else:
             print("No results found in word_search when checking for word_frequency")

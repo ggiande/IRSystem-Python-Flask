@@ -7,11 +7,13 @@ class IRSystemABC(ABC):
     # list_files: contains the list of files that the system
     # is built upon
     # list_words: the list of words inside the files. Each entry is of type word
+    # total could be the number of words in the entire document
 
     @abstractmethod
     def __init__(self):
         self.list_files = []
         self.list_words = []
+        # TODO: When removing empty space, make sure to decrease the counter for total
         self.total = 0
 
     # an abstract function that constructs the whole system
@@ -19,7 +21,7 @@ class IRSystemABC(ABC):
     def build_system(self, list_files):
         pass
 
-    # an abstract method that searchs for a single word
+    # an abstract method that searches for a single word
     # Input: word: a single word in the query we are looking for
     # Return: the list of files that contain that word
     @abstractmethod
@@ -50,6 +52,7 @@ class IRSystemABC(ABC):
     def words_total_count(self):
         for word in self.list_words:
             self.total += word.num_occurrences_content
+        print(f"In abc:{self.total}")
 
     # String representation of the system
     def __str__(self):
@@ -57,6 +60,3 @@ class IRSystemABC(ABC):
         for word in self.list_words:
             str_words = str_words + str(word) + '\n'
         return str_words
-
-    def retrieve_word_list(self):
-        return self.list_words

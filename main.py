@@ -70,9 +70,7 @@ class MainWindow(GridLayout):
 
 #         TODO: If word is inside of the preprocess data, then print the word and count
 #             TODO: Send the word to the controller to fetch data
-        print(f"Main: {c.retrieve_data(word)}")
-
-        # print("You entered: ")
+        print(f"Main: {c.retrieve_data(word.lower())}")
 
 
 class SecondWindow(Screen):
