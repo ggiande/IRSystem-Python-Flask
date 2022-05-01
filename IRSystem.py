@@ -73,7 +73,12 @@ class IRSystem(IRSystemABC):
         os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
-        print(*self.list_words, sep='\n')
+        # print(*self.list_words.__str__(), sep='\n')
+        # for item in self.list_words.retrieve_word_list:
+        # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
+        for w in self.list_words:
+            print(w.text_value_content)
+
 
     def word_search(self, word):
         """
