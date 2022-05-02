@@ -96,17 +96,6 @@ class Word:
         # print(f"Setting the number of occurrences for {self._text_value}")
         self._num_occurrences = number
 
-    # num_occurrences_content, try to use it
-    @num_occurrences_content.deleter
-    def delete_num_occurrences(self) -> None:
-        """
-        Removes the _num_occurrences of the Word
-        :param self instance of Word
-        :return: None
-        """
-        # print(f"Deleting the number of occurrences for {self._text_value}")
-        del self._num_occurrences
-
     # @property
     # def word_snippets_content(self) -> [str]:
     #     """

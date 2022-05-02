@@ -28,7 +28,6 @@ class IRSystem(IRSystemABC):
         Fully processes the files for us
         """
         # TODO: try catch that os works for curr dir
-        print("Preprocessing all data, this may take a while")
         cwd = os.getcwd()
         os.chdir('kivy_venv/movie_scripts')
 
@@ -46,7 +45,7 @@ class IRSystem(IRSystemABC):
                     # TODO: If new_line is not empty, then continue the logic below
 
                     word_list += line
-                print(f"Word List:{word_list}")
+                # print(f"Word List:{word_list}")
                     # print(f"Line should be a single line: {line}")
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
@@ -74,7 +73,7 @@ class IRSystem(IRSystemABC):
         os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
-        # print(*self.list_words.__str__(), sep='\n')
+
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
         # for w in self.list_words:
@@ -85,7 +84,6 @@ class IRSystem(IRSystemABC):
         Helper method for build_system method
         :return: list of word instance
         """
-        # print("IRSys, WORD_SEARCH Function")
         # for w in self.list_words:
         #     if w.text_value_content == word:
         #         print("REPEATING:" + w.text_value_content)
@@ -97,13 +95,10 @@ class IRSystem(IRSystemABC):
         :param query can be a word or words to look for in the processed files
         :return an overlap list of strings
         """
-        # print("IRSys, QUERY_SEARCH Function")
         words = query.split()
         print(f"Inside IRSystem, QUERY SEARCH Function, Words: {words}")
-        # results_files = [["file.txt", "file2.txt"], ["file2.txt"]]
         results_files = []
 
-        # TODO: Fix this
         # search for each word in the query and return the list of files for that word
         for dummy in words:
             word_search = self.word_search(dummy) # holds an instance of word
@@ -115,21 +110,22 @@ class IRSystem(IRSystemABC):
         # if there is no overlap, then the list will be empty
         overlap = []
         if len(results_files):
-            print("QUERY SEARCH, RESULT FILES")
-            print(results_files[0])
+            # print("QUERY SEARCH, RESULT FILES")
+            # print(results_files[0])
             overlap = set(results_files[0]).intersection(*results_files[1:])
         return overlap
 
-    def word_frequency(self, word) -> float:
+    def word_frequency(self, word) -> int:
         """
         Returns the frequency of a word
         If the word does not exist, then it returns a -1
         :param word: word used to find its own number of occurrences
-        :return: frequency/number of occurrences
+        :return: frequency/number of occurrences as an integer
         """
         entry = self.word_search(word)
         if len(entry):
-            print(f"num occur: {entry[0].num_occurrences_content} and the total is: {self.total}")
+            print(type(entry[0].num_occurrences_content))
+            print(f"num occur: {entry[0].num_occurrences_content * 100 / self.total} and the total is: {self.total}")
             return entry[0].num_occurrences_content * 100 / self.total
-        else:
-            print("No results found in word_search when checking for word_frequency")
+        # else:
+        #     print("No results found in word_search when checking for word_frequency")

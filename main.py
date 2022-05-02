@@ -5,7 +5,9 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
 from controller1 import Controller1
+
 c = Controller1()
+
 
 class MainWindow(GridLayout):
     """
@@ -44,7 +46,7 @@ class MainWindow(GridLayout):
             text="GREET",
             size_hint=(1, 0.5),
             bold=True,
-            background_color='#00FFCE'
+            background_color='#36424b'
         )
         # after creation of window
         # Begin the pre-processing of the files
@@ -55,22 +57,30 @@ class MainWindow(GridLayout):
     def callback(self, instance) -> None:
         """
         Calls the element/widget after processing the input specifically for the text widget.
-        Note, this requires the instance to be passed as an argument, code breaking without.
+        This REQUIRES the instance to be passed as an argument, code breaking without.
         :param: instance: instance of the window
         :param: self: instance of MainWindow
         :return: No Return
         """
-
-        self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
         word = self.user.text
 
-        # if self.user.text == "banana":
-        #     instance_app.second_window.update_info(word)
-        #     instance_app.screen_manager.current = "SecondWindow"
-
-#         TODO: If word is inside of the preprocess data, then print the word and count
-#             TODO: Send the word to the controller to fetch data
-        print(f"Main: {c.retrieve_data(word.lower())}")
+        if word.strip():
+            self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
+            data = c.retrieve_data(word.lower())
+            # print(f"Data Retrieved:{data}")
+            if data[0] is None:
+                print("Data is None and No Data Found")
+                self.greeting.text = "No Data Found With That Entry ;/"
+            elif data[0] is not None:
+                # print(f"Data Found: {data}")
+                # Convert the long number to usable number
+                percentage = round(data[0], 2)
+                print(percentage)
+                self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
+                instance_app.second_window.update_info(word, percentage, data[1])
+                instance_app.screen_manager.current = "SecondWindow"
+        else:
+            self.greeting.text = "Empty is not a valid entry!"
 
 
 class SecondWindow(Screen):
@@ -84,22 +94,36 @@ class SecondWindow(Screen):
         :param kwargs: pass a keyworded variable length of arguments upon initialization
         """
         super().__init__(**kwargs)
-        self.cols = 1
+        self.cols = 3
         self.message = Label(
-            halign="center",
             valign="middle",
             font_size=30
         )
+        self.word_frequency_content = Label(
+            valign="middle",
+            font_size=30
+        )
+        self.query_search_files_content = Label(
+            valign="middle",
+            font_size=30
+        )
+
         self.message.bind(width=self.update_text_width)
         self.add_widget(self.message)
+        self.add_widget(self.word_frequency_content)
+        self.add_widget(self.query_search_files_content)
 
-    def update_info(self, message: str) -> None:
+    def update_info(self, message: str, word_frequency_content: int, query_search_files_content: str) -> None:
         """
         Update's the information that processes the input
-        :param message:
+        :message:
+        :word_frequency_content:
+        :query_search_files_content:
         :return: None
         """
         self.message.text = message
+        self.word_frequency_content.text = str(word_frequency_content)
+        self.query_search_files_content.text = str(query_search_files_content)
 
     def update_text_width(self, *_) -> None:
         """
@@ -107,13 +131,19 @@ class SecondWindow(Screen):
         :param _: declared variable that is ignored.
         :return: None
         """
-        self.message.text_size = (self.message.width * 0.85, None)
+        self.message.text_size = (self.message.width * 0.75, None)
 
 
 class MyMainApp(App):
     """
     Main class of the module that is self calling upon the script running
     """
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.second_window = None
+        self.main_window = None
+        self.screen_manager = None
 
     def build(self):
         """

@@ -23,8 +23,6 @@ For Windows default CMD, in the command line do:
 If you are in a bash terminal on Windows, instead do:
 `source kivy_venv/Scripts/activate`
 
-
-
 ### OSX 
 Note that the following instructions
 are only for OSX. For other operating systems, read the documentation
@@ -59,3 +57,7 @@ Start this particular Kivy Application by running, `python3 main.py` after pasti
 
 After running the application, you should see the following:
 ![Kivy Application Launched](https://i.imgur.com/yS8FWOO.png)
+
+## Future Optimizations
+- [ ] Render different screens based on logic of input and retrieval
+- [ ] Implement a more advances word_search for substrings

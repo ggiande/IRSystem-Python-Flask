@@ -13,7 +13,6 @@ class IRSystemABC(ABC):
     def __init__(self):
         self.list_files = []
         self.list_words = []
-        # TODO: When removing empty space, make sure to decrease the counter for total
         self.total = 0
 
     # an abstract function that constructs the whole system
@@ -52,7 +51,7 @@ class IRSystemABC(ABC):
     def words_total_count(self):
         for word in self.list_words:
             self.total += word.num_occurrences_content
-        print(f"In abc:{self.total}")
+        # print(f"In abc:{self.total}")
 
     # String representation of the system
     def __str__(self):
