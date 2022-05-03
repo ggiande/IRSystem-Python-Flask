@@ -37,6 +37,5 @@ class TestWord(unittest.TestCase):
         self.assertEqual(word1.delete_word_snippets(), word1.read_word_snippets())
 
 
-
 if __name__ == '__main__':
     unittest.main()

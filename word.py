@@ -40,7 +40,8 @@ class Word:
         :param: docs the new list of relevant documents to replace _relevant_docs
         :return: None
         """
-        # print(f"Setting a new list of relevant documents for {self._text_value}")
+        # print(f"Setting a new list of relevant documents for {self._text_value} and the file is: {
+        # self.relevant_docs}")
         self.relevant_docs.append(docs)
 
     @property

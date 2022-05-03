@@ -29,7 +29,7 @@ class MainWindow(GridLayout):
         self.window.pos_hint = {"center_x": 0.5, "center_y": 0.5}
 
         self.greeting = Label(
-            text="What fruit do you have in stock?",
+            text="Check to see if a word is in stock!",
             font_size=30,
             color='#00FFCE')
         self.add_widget(self.greeting)
@@ -72,7 +72,6 @@ class MainWindow(GridLayout):
                 print("Data is None and No Data Found")
                 self.greeting.text = "No Data Found With That Entry ;/"
             elif data[0] is not None:
-                # print(f"Data Found: {data}")
                 # Convert the long number to usable number
                 percentage = round(data[0], 2)
                 print(percentage)
@@ -83,7 +82,7 @@ class MainWindow(GridLayout):
             self.greeting.text = "Empty is not a valid entry!"
 
 
-class SecondWindow(Screen):
+class SecondWindow(GridLayout):
     """
     The main controller of the Kivy framework for the second window.
     """
@@ -94,21 +93,21 @@ class SecondWindow(Screen):
         :param kwargs: pass a keyworded variable length of arguments upon initialization
         """
         super().__init__(**kwargs)
-        self.cols = 3
+        self.cols = 1
         self.message = Label(
-            valign="middle",
+            width=100,
             font_size=30
         )
         self.word_frequency_content = Label(
-            valign="middle",
+            width=100,
             font_size=30
         )
         self.query_search_files_content = Label(
-            valign="middle",
+            width=100,
             font_size=30
         )
 
-        self.message.bind(width=self.update_text_width)
+        # self.message.bind(width=self.update_text_width)
         self.add_widget(self.message)
         self.add_widget(self.word_frequency_content)
         self.add_widget(self.query_search_files_content)
@@ -121,9 +120,12 @@ class SecondWindow(Screen):
         :query_search_files_content:
         :return: None
         """
-        self.message.text = message
-        self.word_frequency_content.text = str(word_frequency_content)
-        self.query_search_files_content.text = str(query_search_files_content)
+
+        # Convert incoming texts into their final form before becoming widgets
+        self.message.text = f"Searched for: {message}"
+        self.word_frequency_content.text = f"This word comes up with a frequency of {str(word_frequency_content)}%"
+        self.query_search_files_content.text = f"This word can be found in the following " \
+                                          f"file(s):{str(query_search_files_content)}"
 
     def update_text_width(self, *_) -> None:
         """

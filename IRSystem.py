@@ -41,9 +41,6 @@ class IRSystem(IRSystemABC):
                     # file and store single words comma separated in an array
                     line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
                     line = line.split()
-
-                    # TODO: If new_line is not empty, then continue the logic below
-
                     word_list += line
                 # print(f"Word List:{word_list}")
                     # print(f"Line should be a single line: {line}")
@@ -100,10 +97,11 @@ class IRSystem(IRSystemABC):
         results_files = []
 
         # search for each word in the query and return the list of files for that word
+        # TODO: Introduced a bug here
         for dummy in words:
             word_search = self.word_search(dummy) # holds an instance of word
             # if the word exists, then add the list of files to the results
-            if len(word_search):
+            if len(word_search) > 0:
                 results_files.append(word_search[0].relevant_docs_content)
 
         # overlap all the lists for the words then return only the overlap
@@ -111,7 +109,7 @@ class IRSystem(IRSystemABC):
         overlap = []
         if len(results_files):
             # print("QUERY SEARCH, RESULT FILES")
-            # print(results_files[0])
+            # print(results_files)
             overlap = set(results_files[0]).intersection(*results_files[1:])
         return overlap
 
@@ -124,8 +122,7 @@ class IRSystem(IRSystemABC):
         """
         entry = self.word_search(word)
         if len(entry):
-            print(type(entry[0].num_occurrences_content))
-            print(f"num occur: {entry[0].num_occurrences_content * 100 / self.total} and the total is: {self.total}")
+            # print(f"num occur: {entry[0].num_occurrences_content * 100 / self.total} and the total is: {self.total}")
             return entry[0].num_occurrences_content * 100 / self.total
         # else:
         #     print("No results found in word_search when checking for word_frequency")

@@ -62,3 +62,5 @@ After running the application, you should see the following:
 - [X] Render different screens based on logic of input and retrieval
 - [ ] Implement a more advanced word_search for substrings using dijkstra's algorithm
 - [ ] Implement word snippets functionality of viewing words near the found word
+- [ ] Implement a back button
+- [ ] Fix bug of overlapping files
