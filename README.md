@@ -60,7 +60,7 @@ After running the application, you should see the following:
 
 ## Future Optimizations
 - [X] Render different screens based on logic of input and retrieval
-- [ ] Implement a more advanced word_search for substrings using dijkstra's algorithm
+- [ ] Implement a more advanced word_search for substrings using dijkstra's algorithm, substrings
 - [ ] Implement word snippets functionality of viewing words near the found word
 - [ ] Implement a back button
-- [ ] Fix bug of overlapping files
+- [X] Fix bug of overlapping files

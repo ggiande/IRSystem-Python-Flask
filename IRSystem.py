@@ -39,11 +39,12 @@ class IRSystem(IRSystemABC):
                 word_list = []
                 for line in file:  # iterate through all lines in the
                     # file and store single words comma separated in an array
+                    # TODO: Fix the - as part of regex
                     line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
                     line = line.split()
                     word_list += line
                 # print(f"Word List:{word_list}")
-                    # print(f"Line should be a single line: {line}")
+                # print(f"Line should be a single line: {line}")
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
                     # Check if the word exists in the list of words
@@ -59,7 +60,7 @@ class IRSystem(IRSystemABC):
                             entry_file[0][1] += 1
                         # If it was not encountered before, then add  this file to that word
                         else:
-                            entry[0].relevant_docs_content.append([file_path, 1])
+                            entry[0].relevant_docs_content = [file_path, 1]
                     # if we did not encounter this word before, then add it to the list of words
                     else:
                         word = Word(single_word, 1)
@@ -97,9 +98,8 @@ class IRSystem(IRSystemABC):
         results_files = []
 
         # search for each word in the query and return the list of files for that word
-        # TODO: Introduced a bug here
         for dummy in words:
-            word_search = self.word_search(dummy) # holds an instance of word
+            word_search = self.word_search(dummy)  # holds an instance of word
             # if the word exists, then add the list of files to the results
             if len(word_search) > 0:
                 results_files.append(word_search[0].relevant_docs_content)
