@@ -3,8 +3,9 @@
 # process the words in the files, and build the IRSystem
 import os
 import re
-# TODO: Create test cases, create the main class
+import sys
 
+from utility import Utility
 from IRSystemABC import IRSystemABC
 from word import Word
 
@@ -22,14 +23,24 @@ class IRSystem(IRSystemABC):
         IRSystemABC
         """
         super().__init__()
+        self.utility = Utility()
 
     def build_system(self, list_files):
         """
-        Fully processes the files for us
+        Fully processes the files for IRSystem
         """
-        # TODO: try catch that os works for curr dir
+        # try catch that os works for curr dir
         cwd = os.getcwd()
-        os.chdir('kivy_venv/movie_scripts')
+        try:
+            os.chdir('kivy_venv/movie_scripts')
+            print("Inserting inside-", os.getcwd())
+        except OSError:
+            print("Something wrong with specified\
+                  directory. Exception- ", sys.exc_info())
+        # finally:
+        #     print("Restoring the path")
+        #     os.chdir(cwd)
+        #     print("Current directory is-", os.getcwd())
 
         self.list_files = list_files
 
@@ -66,9 +77,17 @@ class IRSystem(IRSystemABC):
                         word = Word(single_word, 1)
                         word.relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
+        try:
+            os.chdir(cwd)
+            print("Inserting inside-", os.getcwd())
+        except OSError:
+            print("Something wrong with specified\
+                  directory. Exception- ", sys.exc_info())
+        finally:
+            print("Restoring the path")
+            os.chdir('kivy_venv/movie_scripts')
+            print("Current directory is-", os.getcwd())
 
-        # print("Restoring the path")
-        os.chdir(cwd)
         super().words_total_count()
         print("Completed processing all files")
 
@@ -80,11 +99,14 @@ class IRSystem(IRSystemABC):
     def word_search(self, word) -> list:
         """
         Helper method for build_system method
+        Searches if a string is in other instances of Word
+        If so, it collects a list of words
         :return: list of word instance
         """
-        # for w in self.list_words:
-        #     if w.text_value_content == word:
-        #         print("REPEATING:" + w.text_value_content)
+        for w in self.list_words:
+            if w.text_value_content == word:
+                print("REPEATING:" + w.text_value_content)
+                Utility.print_word_contents(w)
         return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query) -> [str]:
@@ -98,8 +120,9 @@ class IRSystem(IRSystemABC):
         results_files = []
 
         # search for each word in the query and return the list of files for that word
-        for dummy in words:
+        for dummy in words: # Strings
             word_search = self.word_search(dummy)  # holds an instance of word
+            print("Word Instance in Query: ", word_search[0].num_occurrences_content)
             # if the word exists, then add the list of files to the results
             if len(word_search) > 0:
                 results_files.append(word_search[0].relevant_docs_content)
@@ -117,6 +140,7 @@ class IRSystem(IRSystemABC):
         """
         Returns the frequency of a word
         If the word does not exist, then it returns a -1
+        entry is a list
         :param word: word used to find its own number of occurrences
         :return: frequency/number of occurrences as an integer
         """

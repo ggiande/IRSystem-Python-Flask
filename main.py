@@ -29,7 +29,7 @@ class MainWindow(GridLayout):
         self.window.pos_hint = {"center_x": 0.5, "center_y": 0.5}
 
         self.greeting = Label(
-            text="Check to see if a word is in stock!",
+            text="Check to see if a self is in stock!",
             font_size=30,
             color='#00FFCE')
         self.add_widget(self.greeting)
@@ -123,8 +123,8 @@ class SecondWindow(GridLayout):
 
         # Convert incoming texts into their final form before becoming widgets
         self.message.text = f"Searched for: {message}"
-        self.word_frequency_content.text = f"This word comes up with a frequency of {str(word_frequency_content)}%"
-        self.query_search_files_content.text = f"This word can be found in the following " \
+        self.word_frequency_content.text = f"This self comes up with a frequency of {str(word_frequency_content)}%"
+        self.query_search_files_content.text = f"This self can be found in the following " \
                                           f"file(s):{str(query_search_files_content)}"
 
     def update_text_width(self, *_) -> None:
