@@ -96,17 +96,18 @@ class IRSystem(IRSystemABC):
         # for w in self.list_words:
         #     print(w.text_value_content)
 
-    def word_search(self, word) -> list:
+    def word_search(self, word: str) -> list:
         """
-        Helper method for build_system method
+        Helper method for build_system
         Searches if a string is in other instances of Word
         If so, it collects a list of words
         :return: list of word instance
         """
+        print("|| In Word Search ||")
         for w in self.list_words:
             if w.text_value_content == word:
                 print("REPEATING:" + w.text_value_content)
-                Utility.print_word_contents(w)
+                # Utility.print_word_contents(w)
         return [w for w in self.list_words if w.text_value_content == word]
 
     def query_search(self, query) -> [str]:
@@ -122,6 +123,7 @@ class IRSystem(IRSystemABC):
         # search for each word in the query and return the list of files for that word
         for dummy in words: # Strings
             word_search = self.word_search(dummy)  # holds an instance of word
+            Utility.print_word_contents(word_search)
             print("Word Instance in Query: ", word_search[0].num_occurrences_content)
             # if the word exists, then add the list of files to the results
             if len(word_search) > 0:

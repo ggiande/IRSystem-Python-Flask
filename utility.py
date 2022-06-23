@@ -13,17 +13,16 @@ class Utility:
         """
 
     @classmethod
-    def print_word_contents(cls, word: Word):
+    def print_word_contents(cls, *args):
         """
         Special method that prints all the contents
         of a specific word
+        :param list:
         :param word: Word instance
         :return: None
         """
-        # print("Printing a new Word")
-        print("String: ", word.text_value_content, "|| ", "Docs: ",
-              word.relevant_docs_content, "|| ", "num occurrences: ",
-              word.num_occurrences_content, "\n")
-        # print("Docs: ", word.relevant_docs_content)
-        # print("# occurrences", word.num_occurrences_content, "\n")
-
+        print("|| In Utility Method ||")
+        for word in args:
+            print("String: ", word[0].text_value_content)
+            print("Docs: ", word[0].relevant_docs_content)
+            print("num occurrences: ", word[0].num_occurrences_content, "\n")
