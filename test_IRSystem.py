@@ -44,7 +44,17 @@ class TestIRSystem(TestCase):
         self.assertEqual(list_expected, irs.word_search("Hello"))
 
     def test_query_search(self):
+        # Do Two Can
         self.fail()
 
     def test_word_frequency(self):
-        self.fail()
+        """
+        Matches the frequency of the occurrences of a word
+        """
+        irs = IRSystem()
+        irs.list_words = []
+        w_expected_one = Word("Hello", 3)
+        w_expected_one.relevant_docs.append(["S", 1])
+        irs.list_words.append(w_expected_one)
+        irs.total = 3
+        self.assertEqual(100, irs.word_frequency("Hello"))

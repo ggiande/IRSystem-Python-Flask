@@ -30,4 +30,10 @@ class Controller1:
         If data can be retrieved, do something
         :return:
         """
-        return self.irsystem.word_frequency(word), self.irsystem.query_search(word)
+        query = self.irsystem.query_search(word)
+        print("Query: ", query)
+        freq = self.irsystem.word_frequency(word)
+        print("Freq: ", freq)
+        list_retrieved_data = [freq, query]
+        return list_retrieved_data
+        # return self.irsystem.word_frequency(word), self.irsystem.query_search(word)

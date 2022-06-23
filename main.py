@@ -66,8 +66,11 @@ class MainWindow(GridLayout):
 
         if word.strip():
             self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
+            print("|| Main ||")
+            print("Input:", word)
             data = c.retrieve_data(word.lower())
-            # print(f"Data Retrieved:{data}")
+            print(f"Data Retrieved:{data}")
+
             if data[0] is None:
                 print("Data is None and No Data Found")
                 self.greeting.text = "No Data Found With That Entry ;/"
