@@ -110,9 +110,10 @@ class IRSystem(IRSystemABC):
         #         # Utility.print_word_contents(w)
         return [w for w in self.list_words if w.text_value_content == word]
 
+    # TODO: Fix so specific queries can return ALL possible results and not a union
     def query_search(self, query: str) -> [str]:
         """
-        Method returns data associated with Word
+        Method returns relevant docs associated with Word
         :param query can be a word or words to look for in the processed files
         :return an overlap list of strings
         """
@@ -123,7 +124,7 @@ class IRSystem(IRSystemABC):
 
         # search for each word in the query and return the list of files for that word
         for dummy in words:  # Strings
-            word_search = self.word_search(dummy)  # holds an instance of word
+            word_search = self.word_search(dummy)  # holds a list of the instance of Word
             # Utility.print_word_contents(word_search)
             # print("Word Instance in Query: ", word_search[0].num_occurrences_content)
             # if the word exists, then add the list of files to the results
