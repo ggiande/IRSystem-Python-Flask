@@ -1,4 +1,4 @@
-from IRSystem import IRSystem
+from service.impl.IRSystem import IRSystem
 import os
 
 
@@ -21,13 +21,12 @@ class Controller1:
         Pre Process a list of files using the IRSystem
         :return: None
         """
-        arr = os.listdir('kivy_venv/movie_scripts')
+        arr = os.listdir('data/')
         self.irsystem.build_system(arr)
 
     def retrieve_data(self, word: str) -> [str]:
         """
         Given word from input, returns available data to user
-        If data can be retrieved, do something
         :return:
         """
         query = self.irsystem.query_search(word)

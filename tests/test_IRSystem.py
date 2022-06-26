@@ -1,9 +1,7 @@
 from unittest import TestCase
 
-from IRSystemABC import IRSystemABC
-from utility import Utility
-from IRSystem import IRSystem
-from word import Word
+from service.impl.IRSystem import IRSystem
+from model.word import Word
 from unittest.mock import Mock
 
 

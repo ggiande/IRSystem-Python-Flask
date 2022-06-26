@@ -5,9 +5,18 @@ import os
 import re
 import sys
 
-from utility import Utility
-from IRSystemABC import IRSystemABC
-from word import Word
+from utils import Utility
+from service.IRSystemABC import IRSystemABC
+from model.word import Word
+
+
+def change_directory_files(cwd):
+    try:
+        os.chdir(cwd)
+        print("Inserting inside-", os.getcwd())
+    except OSError:
+        print("Something wrong with specified\
+              directory. Exception- ", sys.exc_info())
 
 
 class IRSystem(IRSystemABC):
@@ -25,23 +34,13 @@ class IRSystem(IRSystemABC):
         super().__init__()
         self.utility = Utility()
 
-    def build_system(self, list_files):
+    def build_system(self, list_files: [str]) -> None:
         """
         Fully processes the files for IRSystem
         """
-        # try catch that os works for curr dir
         cwd = os.getcwd()
-        try:
-            os.chdir('kivy_venv/movie_scripts')
-            print("Inserting inside-", os.getcwd())
-        except OSError:
-            print("Something wrong with specified\
-                  directory. Exception- ", sys.exc_info())
-        # finally:
-        #     print("Restoring the path")
-        #     os.chdir(cwd)
-        #     print("Current directory is-", os.getcwd())
-
+        # Change into directory
+        change_directory_files('data')
         self.list_files = list_files
 
         for file_path in self.list_files:
@@ -54,8 +53,7 @@ class IRSystem(IRSystemABC):
                     line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
                     line = line.split()
                     word_list += line
-                # print(f"Word List:{word_list}")
-                # print(f"Line should be a single line: {line}")
+
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
                     # Check if the word exists in the list of words
@@ -77,16 +75,8 @@ class IRSystem(IRSystemABC):
                         word = Word(single_word, 1)
                         word.relevant_docs.append([file_path, 1])
                         self.list_words.append(word)
-        try:
-            os.chdir(cwd)
-            print("Inserting inside-", os.getcwd())
-        except OSError:
-            print("Something wrong with specified\
-                  directory. Exception- ", sys.exc_info())
-        finally:
-            print("Restoring the path")
-            os.chdir('kivy_venv/movie_scripts')
-            print("Current directory is-", os.getcwd())
+        # revert directory
+        change_directory_files(cwd)
 
         super().words_total_count()
         print("Completed processing all files")
@@ -96,14 +86,14 @@ class IRSystem(IRSystemABC):
         # for w in self.list_words:
         #     print(w.text_value_content)
 
-    def word_search(self, word: str) -> list:
+    def word_search(self, word: str) -> list[Word]:
         """
         Helper method for build_system
         Searches if a string is in other instances of Word
         If so, it collects a list of words
         :return: list of word instance
         """
-        print("|| In Word Search ||")
+        # print("|| In Word Search ||")
         # for w in self.list_words:
         #     if w.text_value_content == word:
         #         print("REPEATING:" + w.text_value_content)

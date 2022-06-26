@@ -13,8 +13,7 @@ class Utility:
         """
         Special method that prints all the contents
         of a specific word
-        :param list:
-        :param word: Word instance
+        :param args: Word instance or list of Word instances
         :return: None
         """
         print("|| In Utility Method ||")
