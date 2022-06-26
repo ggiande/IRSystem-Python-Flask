@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 class Word:
     """
     Word Model
@@ -14,7 +13,6 @@ class Word:
                  ) -> None:
         """
         Special method that replaces a constructor/__new()__
-        # :param relevant_docs: [str] List of document names where the word has appeared
         :param num_occurrences: int The number of times this specific word has been spotted
         :param text_value: str Literal string for searching
         """
@@ -27,9 +25,10 @@ class Word:
         """
         This is a list of documents that are relevant to our word
         :param self instance of Word
-        :return: str returns the _relevant_docs of the word
+        :return: returns the first element in _relevant_docs of the word
         """
         # print(f"Getting the list of relevant documents for {self._text_value}")
+        # print("below", [f[0] for f in self.relevant_docs])
         return [f[0] for f in self.relevant_docs]
 
     @relevant_docs_content.setter
@@ -40,18 +39,19 @@ class Word:
         :param: docs the new list of relevant documents to replace _relevant_docs
         :return: None
         """
-        # print(f"Setting a new list of relevant documents for {self._text_value} and the file is: {
-        # self.relevant_docs}")
+        print(docs)
+        # print(f"Setting a new list of relevant documents for {self._text_value} "
+        #       f"and the file is: {self.relevant_docs}")
         self.relevant_docs.append(docs)
 
     @property
-    def text_value_content(self) -> str:
+    def text_value_content(self=" ") -> str:
         """
         This is the text value property of the word
         :param self instance of Word
         :return: str returns the _text_value of the word
+        :raises: AttributeError if no data is string is assigned
         """
-        # print(f"Getting the word: {self._text_value}")
         return self._text_value
 
     @text_value_content.setter

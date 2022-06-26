@@ -2,40 +2,33 @@ import unittest
 from model.word import Word
 
 
-# TODO: Add docstrings and REDO all function call
 class TestWord(unittest.TestCase):
 
     def test_initial_value(self):
         self.setUpClass()
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        assert word1.relevant_docs == ["Hello"]
-        assert word1.text_value == "Hello World"
-        assert word1.word_snippets == ["Snippet One", "Snippet Two"]
-        assert word1.num_occurrences == 1
+        word = Word("Hello", 1)
+        assert word.text_value_content == "Hello"
+        assert word.num_occurrences_content == 1
 
-    def test_read_word_text_value(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.read_word_text_value(), word1.text_value)
+    def test_text_value_content(self):
+        word = Word("Hello", 1)
+        self.assertEqual("Hello", word.text_value_content)
+        word.text_value_content = "World"
+        self.assertEqual("World", word.text_value_content)
+        del word.text_value_content
+        with self.assertRaises(AttributeError):
+            word.text_value_content
 
-    def test_delete_word_text_value(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.delete_word_text_value(), word1.read_word_text_value())
+    def test_num_occurrences_content(self):
+        word = Word("Hello", 1)
+        self.assertEqual(1, word.num_occurrences_content)
+        word.num_occurrences_content = 2
+        self.assertEqual(2, word.num_occurrences_content)
 
-    def test_read_num_occurrences(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.read_num_occurrences(), word1.num_occurrences)
-
-    def test_delete_num_occurrences(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.delete_num_occurrences(), word1.read_num_occurrences())
-
-    def test_read_word_snippets(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.read_word_snippets(), word1.word_snippets)
-
-    def test_delete_word_snippets(self):
-        word1 = Word(["Hello"], "Hello World", ["Snippet One", "Snippet Two"], 1)
-        self.assertEqual(word1.delete_word_snippets(), word1.read_word_snippets())
+    def test_relevant_docs_content(self):
+        word = Word("Hello", 1)
+        word.relevant_docs = ["ABC", "DEF"]
+        self.assertEqual(["A", "D"], word.relevant_docs_content)
 
 
 if __name__ == '__main__':
