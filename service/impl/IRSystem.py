@@ -61,19 +61,24 @@ class IRSystem(IRSystemABC):
                     # If the word was encountered before, then we need to increment the count
                     # then check if the file we are working in was encountered before
                     # with for that word
-                    if len(entry):
+                    if len(entry): # entry = Word
                         entry[0].num_occurrences_content += 1
-                        entry_file = [f for f in entry[0].relevant_docs_content if f[0] == file_path]
+                        # One doc, if doc is from the current file, add it to the list of entries
+                        # ALWAYS RETURNS EMPTY
+                        entry_file_list = [f for f in entry[0].relevant_docs_content if f[0] == file_path]
                         # If the file was encountered before, increment the counter for that file
-                        if len(entry_file):
-                            entry_file[0][1] += 1
+                        if len(entry_file_list):
+                            print("We have encountered this file before")
+                            entry_file_list[0][1] += 1
                         # If it was not encountered before, then add  this file to that word
                         else:
-                            entry[0].relevant_docs_content = [file_path, 1]
+                            # print("We have not encountered this file before")
+                            entry[0].relevant_docs_content = [file_path]
                     # if we did not encounter this word before, then add it to the list of words
                     else:
                         word = Word(single_word, 1)
-                        word.relevant_docs.append([file_path, 1])
+                        word.relevant_docs.append([file_path])
+                        print(Utility.print_word_contents(word))
                         self.list_words.append(word)
         # revert directory
         change_directory_files(cwd)
@@ -118,7 +123,13 @@ class IRSystem(IRSystemABC):
             # Utility.print_word_contents(word_search)
             # print("Word Instance in Query: ", word_search[0].num_occurrences_content)
             # if the word exists, then add the list of files to the results
-            if len(word_search) > 0:
+            if len(word_search):
+                #     one_doc = Utility.collect_one_relevant_document(self)
+                # results_files.append(word_search[0].one_doc) # references
+                # print("WordSearch[0]:", {Utility.print_word_contents(word_search[0])})
+                # print(len(word_search))
+                # grabs first element of the list (Word.relevant_docs_content)
+                # print("WordSearch[0].relevant_docs_content:", {word_search[0].relevant_docs_content})
                 results_files.append(word_search[0].relevant_docs_content)
 
         # overlap all the lists for the words then return only the overlap

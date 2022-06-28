@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 class Word:
     """
     Word Model
@@ -28,6 +29,7 @@ class Word:
         :return: returns the first element in _relevant_docs of the word
         """
         # print(f"Getting the list of relevant documents for {self._text_value}")
+        print(self.relevant_docs)
         # print("below", [f[0] for f in self.relevant_docs])
         return [f[0] for f in self.relevant_docs]
 
@@ -39,7 +41,7 @@ class Word:
         :param: docs the new list of relevant documents to replace _relevant_docs
         :return: None
         """
-        print(docs)
+        # print(docs)
         # print(f"Setting a new list of relevant documents for {self._text_value} "
         #       f"and the file is: {self.relevant_docs}")
         self.relevant_docs.append(docs)

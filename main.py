@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.graphics import Color, Rectangle
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -28,10 +29,14 @@ class MainWindow(GridLayout):
         self.window.size_hint = (0.60, 0.70)
         self.window.pos_hint = {"center_x": 0.5, "center_y": 0.5}
 
+        # with self.canvas:
+        #     Color(rgba=(.5, .5, .5))
+        #     Rectangle(size=self.size, pos=self.pos)
+
         self.greeting = Label(
             text="Check to see if a self is in stock!",
             font_size=30,
-            color='#00FFCE')
+            color='#9e5190')
         self.add_widget(self.greeting)
 
         self.user = TextInput(
@@ -109,7 +114,6 @@ class SecondWindow(GridLayout):
             width=100,
             font_size=30
         )
-
         # self.message.bind(width=self.update_text_width)
         self.add_widget(self.message)
         self.add_widget(self.word_frequency_content)
@@ -128,7 +132,7 @@ class SecondWindow(GridLayout):
         self.message.text = f"Searched for: {message}"
         self.word_frequency_content.text = f"This word comes up with a frequency of {str(word_frequency_content)}%"
         self.query_search_files_content.text = f"This word can be found in the following " \
-                                          f"file(s):{str(query_search_files_content)}"
+                                               f"file(s):{str(query_search_files_content)}"
 
     def update_text_width(self, *_) -> None:
         """
@@ -166,7 +170,6 @@ class MyMainApp(App):
         screen = Screen(name="SecondWindow")
         screen.add_widget(self.second_window)
         self.screen_manager.add_widget(screen)
-
         return self.screen_manager
 
 
