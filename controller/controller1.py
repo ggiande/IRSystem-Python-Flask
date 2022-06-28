@@ -1,5 +1,8 @@
+from typing import List, Any
+
 from service.impl.IRSystem import IRSystem
 import os
+from model.response import Response
 
 
 # read, organize the data, then another function should search an organized piece of data
@@ -24,15 +27,14 @@ class Controller1:
         arr = os.listdir('data/')
         self.irsystem.build_system(arr)
 
-    def retrieve_data(self, word: str) -> [str]:
+    def retrieve_data(self, word: str) -> str:
         """
         Given word from input, returns available data to user
         :return:
         """
-        query = self.irsystem.query_search(word)
-        print("Query: ", query)
+        query = list(self.irsystem.query_search(word))
         freq = self.irsystem.word_frequency(word)
-        print("Freq: ", freq)
-        list_retrieved_data = [freq, query]
-        return list_retrieved_data
-        # return self.irsystem.word_frequency(word), self.irsystem.query_search(word)
+        response = Response(query, freq, word)
+        print("RESPONSE:", response)
+        return response.toJSON()
+

@@ -1,29 +1,35 @@
+from typing import Optional
+
 from controller.controller1 import Controller1
 from flask import Flask
 from flask_cors import CORS
+
+from model.response import Response
+from utils import Utility
 
 app = Flask(__name__)
 CORS(app)
 c = Controller1()
 
 
-@app.route("/hi")
-def hello_world():
-    # callback()
-    print("Accessing HI")
-    name = "Gian"
-    hobby = "coding"
-    return {
-        "followings": [
-            {
-                "name": name,
-                "hobby": hobby
-            }
-        ]
-    }
+# Endpoint for an example
+@app.route("/example")
+def query_example() -> str:
+    word = "cannon"
+    response = callback(word)
+    print("Accessing example")
+    return response
 
 
-def callback() -> None:
+# Endpoint for query
+@app.route("/<string:word>")
+def hello_world(word: str) -> str:
+    response = callback(word)
+    print("Accessing async call")
+    return response
+
+
+def callback(word: str) -> str:
     """
     Calls the element/widget after processing the input specifically for the text widget.
     This REQUIRES the instance to be passed as an argument, code breaking without.
@@ -31,23 +37,17 @@ def callback() -> None:
     :return: No Return
     """
     # Get an input
-    word = "cannon"
 
     if word.strip():
-        # self.greeting.text = "Checking to see if " + self.user.text + " is in stock!"
         print("|| Main ||")
         print("Input:", word)
-        data = c.retrieve_data(word.lower())
-        print(f"Data Retrieved:{data}")
-
-        if data[0] is None:
-            print("Data is None and No Data Found")
-            # self.greeting.text = "No Data Found With That Entry ;/"
-        elif data[0] is not None:
-            # Convert the long number to usable number
-            percentage = round(data[0], 2)
-            print(percentage)
-
+        c.process_files()
+        response = c.retrieve_data(word)
+        # print(f"Data Retrieved:{Utility.print_word_contents(response)}")
+        if response is not None:
+            return response
+        else:
+            print("No Response")
     else:
         print("Empty is not a valid entry!")
         # self.greeting.text = "Empty is not a valid entry!"
