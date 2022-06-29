@@ -7,6 +7,9 @@ from model.response import Response
 
 # read, organize the data, then another function should search an organized piece of data
 # Controller should get called after UI finishes building to pre-process the data
+from utils import Utility
+
+
 class Controller1:
     """
     Controller stores business logic between Word
@@ -35,6 +38,6 @@ class Controller1:
         query = list(self.irsystem.query_search(word))
         freq = self.irsystem.word_frequency(word)
         response = Response(query, freq, word)
-        print("RESPONSE:", response)
+        Utility.print_response_contents(response)
         return response.toJSON()
 

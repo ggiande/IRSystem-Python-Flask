@@ -24,8 +24,8 @@ def query_example() -> str:
 # Endpoint for query
 @app.route("/<string:word>")
 def hello_world(word: str) -> str:
-    response = callback(word)
     print("Accessing async call")
+    response = callback(word)
     return response
 
 
@@ -36,15 +36,13 @@ def callback(word: str) -> str:
     :param: self: instance of Main
     :return: No Return
     """
-    # Get an input
-
     if word.strip():
         print("|| Main ||")
         print("Input:", word)
         c.process_files()
         response = c.retrieve_data(word)
-        # print(f"Data Retrieved:{Utility.print_word_contents(response)}")
         if response is not None:
+            # print("Got a Response")
             return response
         else:
             print("No Response")

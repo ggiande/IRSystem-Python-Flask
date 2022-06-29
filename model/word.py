@@ -29,7 +29,7 @@ class Word:
         :return: returns the first element in _relevant_docs of the word
         """
         # print(f"Getting the list of relevant documents for {self._text_value}")
-        print(self.relevant_docs)
+        # print(self.relevant_docs)
         # print("below", [f[0] for f in self.relevant_docs])
         return [f[0] for f in self.relevant_docs]
 
