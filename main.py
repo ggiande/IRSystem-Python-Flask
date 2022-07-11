@@ -1,11 +1,6 @@
-from typing import Optional
-
 from controller.controller1 import Controller1
-from flask import Flask
+from flask import Flask, Response
 from flask_cors import CORS
-
-from model.response import Response
-from utils import Utility
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +8,7 @@ c = Controller1()
 
 
 # Endpoint for an example
-@app.route("/example")
+@app.route("/")
 def query_example() -> str:
     word = "cannon"
     response = callback(word)

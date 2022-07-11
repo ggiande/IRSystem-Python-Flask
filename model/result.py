@@ -1,7 +1,7 @@
 import json
 
 
-class Response:
+class Result:
     """
     """
     def __init__(self,
@@ -9,8 +9,6 @@ class Response:
                  frequency: int,
                  text_string: str
                  ) -> None:
-        """
-        """
         super().__init__()
         self._list_relevant_docs = list_relevant_docs
         self._frequency = frequency
