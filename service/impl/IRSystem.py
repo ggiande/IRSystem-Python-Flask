@@ -45,12 +45,10 @@ class IRSystem(IRSystemABC):
 
         for file_path in self.list_files:
             with open(file_path, encoding="utf8", errors='ignore') as file:  # open file
-                # Retrieves all the words from a line
-                word_list = []
+                word_list = [] # Retrieves all the words from a line
                 for line in file:  # iterate through all lines in the
-                    # file and store single words comma separated in an array
                     # TODO: Fix the - as part of regex
-                    line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
+                    line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower() # file and store single words comma separated in an array
                     line = line.split()
                     word_list += line
 
@@ -85,6 +83,7 @@ class IRSystem(IRSystemABC):
 
         super().words_total_count()
         print("Completed processing all files")
+        print("abc -> list_of_words", Utility.print_word_contents(self.list_of_words))
 
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
