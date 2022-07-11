@@ -132,11 +132,12 @@ class IRSystem(IRSystemABC):
                 # print("WordSearch[0].relevant_docs_content:", {word_search[0].relevant_docs_content})
                 results_files.append(word_search[0].relevant_docs_content)
 
-        # overlap all the lists for the words then return only the overlap
+        # overlap all the lists for the words then return only the overlap(INNER JOIN)
         # if there is no overlap, then the list will be empty
         overlap = []
         if len(results_files):
-            overlap = set(results_files[0]).intersection(*results_files[1:])
+            # overlap = set(results_files[0]).intersection(*results_files[1:])
+            overlap = set(results_files[0]).union(*results_files[1:])
         return overlap
 
     def word_frequency(self, query_freq: str) -> int:

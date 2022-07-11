@@ -1,6 +1,7 @@
 from controller.controller1 import Controller1
-from flask import Flask, Response
+from flask import Flask
 from flask_cors import CORS
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,17 @@ def hello_world(word: str) -> str:
     return response
 
 
+# Endpoint for feeling lucky
+@app.route("/lucky")
+def query_lucky_word() -> str:
+    # choose word from list of words in list in IRS
+    list_text_of_words = c.get_lucky_list()
+    random_word = random.choice(list_text_of_words)  # holds a word
+    word = random_word.text_value_content
+    response = callback(word)
+    return response
+
+
 def callback(word: str) -> str:
     """
     Calls the element/widget after processing the input specifically for the text widget.
@@ -37,13 +49,11 @@ def callback(word: str) -> str:
         c.process_files()
         response = c.retrieve_data(word)
         if response is not None:
-            # print("Got a Response")
             return response
         else:
             print("No Response")
     else:
         print("Empty is not a valid entry!")
-        # self.greeting.text = "Empty is not a valid entry!"
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from model import Word
+
 
 class IRSystemABC(ABC):
 
@@ -53,9 +55,17 @@ class IRSystemABC(ABC):
             self.total += word.num_occurrences_content
         # print(f"In abc:{self.total}")
 
-    # String representation of the system
-    def __str__(self):
-        str_words = ''
-        for word in self.list_words:
-            str_words = str_words + str(word) + '\n'
-        return str_words
+    def list_of_words(self) -> [Word]:
+        """
+        Returns a list of words stored in IRS.
+        :return:
+        """
+        if self.list_words:
+            return self.list_words
+
+    # # String representation of the system
+    # def __str__(self):
+    #     str_words = ''
+    #     for word in self.list_words:
+    #         str_words = str_words + str(word) + '\n'
+    #     return str_words

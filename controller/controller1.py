@@ -39,3 +39,6 @@ class Controller1:
         response = Result(query, freq, word)
         Utility.print_response_contents(response)
         return response.toJSON()
+
+    def get_lucky_list(self):
+        return self.irsystem.list_words
