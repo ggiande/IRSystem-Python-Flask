@@ -184,7 +184,8 @@ class IRSystem(IRSystemABC):
         :return: frequency/number of occurrences as an integer
         """
         print("|| Word Frequency ||")
-        words = query_freq.split()
+        words = re.sub("[^a-zA-Z0-9\s]+", " ", query_freq)
+        words = words.split()
         entry = []
         for dummy in words:  # Strings
             entry = self.word_search(dummy)  # a list of Word
@@ -193,3 +194,13 @@ class IRSystem(IRSystemABC):
             return entry[0].num_occurrences_content * 100 / self.total
         # else:
         #     print("No results found in word_search when checking for word_frequency")
+
+    def word_snippets_collection(self, query_snips: str) -> [str]:
+        words = re.sub("[^a-zA-Z0-9\s]+", " ", query_snips)
+        words = words.split()
+        results_snips = []
+        for dummy in words:  # Strings
+            word_search = self.word_search(dummy)  # holds a list of the instance of Word
+            if len(word_search):
+                results_snips.append(word_search[0].word_snippets_content)
+        return results_snips

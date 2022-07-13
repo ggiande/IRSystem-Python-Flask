@@ -54,8 +54,6 @@ def callback(word: str) -> str:
             return response
         else:
             print("No Response")
-    else:
-        print("Empty is not a valid entry!")
 
 
 if __name__ == "__main__":

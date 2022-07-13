@@ -4,15 +4,30 @@ import json
 class Result:
     """
     """
+
     def __init__(self,
                  list_relevant_docs: [str],
                  frequency: int,
-                 text_string: str
+                 text_string: str,
+                 word_snippets: [str]
                  ) -> None:
         super().__init__()
         self._list_relevant_docs = list_relevant_docs
         self._frequency = frequency
         self._text_string = text_string
+        self._word_snippets = word_snippets
+
+    @property
+    def word_snippets_content(self) -> [str]:
+        return self._word_snippets
+
+    @word_snippets_content.setter
+    def word_snippets_content(self, snips_list: [str]) -> None:
+        self._word_snippets.append(snips_list)
+
+    @word_snippets_content.deleter
+    def word_snippets_content(self) -> None:
+        del self._word_snippets
 
     @property
     def text_string_content(self) -> str:
@@ -21,6 +36,10 @@ class Result:
     @text_string_content.setter
     def text_string_content(self, value: str) -> None:
         self._text_string = value
+
+    @text_string_content.deleter
+    def text_string_content(self) -> None:
+        del self._text_string
 
     @property
     def list_relevant_docs_content(self) -> [str]:
@@ -36,6 +55,10 @@ class Result:
         """
         self._list_relevant_docs = value
 
+    @list_relevant_docs_content.deleter
+    def list_relevant_docs_content(self) -> None:
+        self._list_relevant_docs
+
     @property
     def frequency_content(self) -> int:
         return self._frequency
@@ -44,5 +67,15 @@ class Result:
     def frequency_content(self) -> int:
         return round(self._frequency, 2)
 
+    @frequency_content.deleter
+    def frequency_content(self) -> None:
+        del self._frequency
+
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+    def deconstructResult(self) -> None:
+        del self.list_relevant_docs_content
+        del self.frequency_content
+        del self._text_string
+        del self.word_snippets_content

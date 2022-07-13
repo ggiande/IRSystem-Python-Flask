@@ -36,8 +36,9 @@ class Controller1:
         """
         query = list(self.irsystem.query_search(word))
         freq = self.irsystem.word_frequency(word)
-        response = Result(query, freq, word)
-        Utility.print_response_contents(response)
+        snips = self.irsystem.word_snippets_collection(word)
+        response = Result(query, freq, word, snips)
+        # Utility.print_response_contents(response)
         return response.toJSON()
 
     def get_lucky_list(self):
