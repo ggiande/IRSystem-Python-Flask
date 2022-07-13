@@ -43,15 +43,13 @@ class IRSystem(IRSystemABC):
         # Change into directory
         change_directory_files('data')
         self.list_files = list_files
-        snips = []  # list of strings used for word_snippets
+        # snips = []  # list of strings used for word_snippets
 
         for file_path in self.list_files:
-
             # 1st document, run a different iteration than below
-            with open(file_path, encoding="utf8", errors='ignore') as file:  # open file
-
+            with open(file_path, encoding="utf8", errors='ignore') as file_build_word:  # open file
                 word_list = []  # Retrieves all the words from a line
-                for line in file:  # iterate through all lines in the
+                for line in file_build_word:  # iterate through all lines in the
                     line = re.sub("[^a-zA-Z0-9\s]+", " ",
                                   line).lower()  # file and store single words comma separated in an array
                     line = line.split()
@@ -84,46 +82,50 @@ class IRSystem(IRSystemABC):
                         word.relevant_docs.append([file_path])
                         self.list_words.append(word)
 
-        # TODO: ADD Word Snippets Implementation
-        for file_path in self.list_files:
-
-            # Open a file and read it
-            with open(file_path, encoding="utf8", errors='ignore') as file:
-                word_list = []  # Retrieves all the words from a line
-                for line in file:  # iterate through all lines in the
+                # TODO: Add Word Snippets Implementation
+                file_build_word.seek(0)
+                word_list_for_snippets = []  # Retrieves all the words from a line
+                for line in file_build_word:  # iterate through all lines in the
                     line = re.sub("[^a-zA-Z0-9\s]+", " ",
                                   line).lower()  # file and store single words comma separated in an array
                     line = line.split()
-                    word_list += line
+                    word_list_for_snippets += line
+                # print(word_list_for_snippets)
+                self.sliding_window(word_list_for_snippets)  # Implements word snippets
 
-            self.sliding_window(word_list)  # Implements word snippets
-        #     After looking at the first file, we expect the words to already have instances. Iterate
-        # through the word_snippets, at each middle point, we can add the list of words to that word.
-
+            #     After looking at the first file, we expect the words to already have instances. Iterate
+            # through the word_snippets, at each middle point, we can add the list of words to that word.
+            # file_build_word.close()
         change_directory_files(cwd)  # revert directory
 
         super().words_total_count()
         print("Completed processing all files")
-        print("Word Snippets: ", snips)
 
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
-        # for w in self.list_words:
-        #     print(w.text_value_content)
+        for w in self.list_words:
+            print(w.text_value_content)
+            print(w.word_snippets_content)
+            print(w.relevant_docs_content)
+            print(w.num_occurrences_content)
 
     # Note at this time, it voids 4 words in each file
     def sliding_window(self, list_string_of_doc: [str]) -> None:
         snips_list = list(zip(*[list_string_of_doc[i:] for i in range(Constant.SLIDING_WINDOW_SIZE)]))
+        # print("sliding_window -> snips_list: ", snips_list)
 
         for dummy in snips_list:
+            # print("sliding_window -> dummy: ", dummy)
             middle_int = int(len(dummy) / 2)
             middle_word = dummy[middle_int]
-            word_search = self.word_search(middle_word)  # holds a list of the instance of Word
 
+            word_search = self.word_search(middle_word)  # holds a list of the instance of Word
             # if the word exists, then do some logic
             if len(word_search):
-                current_word = word_search[0].relevant_docs_content
-                current_word.word_snippets_content(dummy)
+                current_word = word_search[0]
+                # print("sliding_window -> current word: ", current_word.text_value_content)
+                current_word.word_snippets.append(dummy)
+                # print("sliding_window -> current word: ", current_word.text_value_content)
 
     def word_search(self, word: str) -> list[Word]:
         """

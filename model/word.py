@@ -18,21 +18,18 @@ class Word:
         :param text_value: str Literal string for searching
         """
         self.relevant_docs = []
+        self.word_snippets = []
         self._text_value = text_value
         self._num_occurrences = num_occurrences
-        self._word_snippets = []
 
     @property
     def word_snippets_content(self) -> [str]:
-        return self._word_snippets
+        return self.word_snippets
 
     @word_snippets_content.setter
     def word_snippets_content(self, snips_list: [str]) -> None:
-        self.relevant_docs.append(snips_list)
-
-    @word_snippets_content.deleter
-    def word_snippets_content(self) -> None:
-        del self._word_snippets
+        # print("Word -> word_snippets_content: setter: ", snips_list)
+        self.word_snippets.append(snips_list)
 
     @property
     def relevant_docs_content(self) -> [str]:
