@@ -22,6 +22,7 @@ def query_example() -> str:
 def hello_world(word: str) -> str:
     print("Accessing async call")
     response = callback(word)
+    print("DONE, SENDING REQUEST")
     return response
 
 
@@ -47,7 +48,8 @@ def callback(word: str) -> str:
         print("|| Main ||")
         print("Input:", word)
         c.process_files()
-        response = c.retrieve_data(word)
+
+        response = c.retrieve_data(word.lower())
         if response is not None:
             return response
         else:

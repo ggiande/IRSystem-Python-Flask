@@ -3,7 +3,7 @@ from typing import List, Any
 from service.impl.IRSystem import IRSystem
 import os
 from model.result import Result
-
+from utils.constant import Constant
 # read, organize the data, then another function should search an organized piece of data
 # Controller should get called after UI finishes building to pre-process the data
 from utils import Utility
@@ -26,7 +26,7 @@ class Controller1:
         Pre Process a list of files using the IRSystem
         :return: None
         """
-        arr = os.listdir('data/')
+        arr = os.listdir(Constant.DATA_FOLDER)
         self.irsystem.build_system(arr)
 
     def retrieve_data(self, word: str) -> str:
