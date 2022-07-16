@@ -9,7 +9,7 @@ c = Controller1()
 
 
 # Endpoint for an example
-@app.route("/")
+@app.route("/query/", methods=['GET'])
 def query_example() -> str:
     word = "cannon"
     response = callback(word)
@@ -17,12 +17,19 @@ def query_example() -> str:
     return response
 
 
+@app.route("/ping", methods=['GET'])
+def ping_health_check():
+    from flask import jsonify
+    resp = jsonify(success=True)
+    return resp
+
+
 # Endpoint for query
-@app.route("/<string:word>")
+@app.route("/query/<string:word>", methods=['POST'])
 def hello_world(word: str) -> str:
-    print("Accessing async call")
+    # print("Accessing async call")
     response = callback(word)
-    print("DONE, SENDING REQUEST")
+    print("Query Request -> Sending Response")
     return response
 
 

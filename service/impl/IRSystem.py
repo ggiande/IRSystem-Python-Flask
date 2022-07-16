@@ -103,11 +103,11 @@ class IRSystem(IRSystemABC):
 
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
-        for w in self.list_words:
-            print(w.text_value_content)
-            print(w.word_snippets_content)
-            print(w.relevant_docs_content)
-            print(w.num_occurrences_content)
+        # for w in self.list_words:
+        #     print(w.text_value_content)
+        #     print(w.word_snippets_content)
+        #     print(w.relevant_docs_content)
+        #     print(w.num_occurrences_content)
 
     # Note at this time, it voids 4 words in each file
     def sliding_window(self, list_string_of_doc: [str]) -> None:
@@ -183,7 +183,7 @@ class IRSystem(IRSystemABC):
         :param query_freq: string used to find its own number of occurrences
         :return: frequency/number of occurrences as an integer
         """
-        print("|| Word Frequency ||")
+        # print("|| Word Frequency ||")
         words = re.sub("[^a-zA-Z0-9\s]+", " ", query_freq)
         words = words.split()
         entry = []
