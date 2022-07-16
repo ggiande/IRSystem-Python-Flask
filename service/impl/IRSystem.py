@@ -8,6 +8,7 @@ import sys
 from utils import Utility
 from service.IRSystemABC import IRSystemABC
 from model.word import Word
+from utils import Constant
 
 
 def change_directory_files(cwd):
@@ -42,15 +43,15 @@ class IRSystem(IRSystemABC):
         # Change into directory
         change_directory_files('data')
         self.list_files = list_files
+        # snips = []  # list of strings used for word_snippets
 
         for file_path in self.list_files:
-            with open(file_path, encoding="utf8", errors='ignore') as file:  # open file
-                # Retrieves all the words from a line
-                word_list = []
-                for line in file:  # iterate through all lines in the
-                    # file and store single words comma separated in an array
-                    # TODO: Fix the - as part of regex
-                    line = re.sub("[^a-zA-Z0-9\s]+", "", line).lower()
+            # 1st document, run a different iteration than below
+            with open(file_path, encoding="utf8", errors='ignore') as file_build_word:  # open file
+                word_list = []  # Retrieves all the words from a line
+                for line in file_build_word:  # iterate through all lines in the
+                    line = re.sub("[^a-zA-Z0-9\s]+", " ",
+                                  line).lower()  # file and store single words comma separated in an array
                     line = line.split()
                     word_list += line
 
@@ -61,7 +62,7 @@ class IRSystem(IRSystemABC):
                     # If the word was encountered before, then we need to increment the count
                     # then check if the file we are working in was encountered before
                     # with for that word
-                    if len(entry): # entry = Word
+                    if len(entry):  # entry = Word
                         entry[0].num_occurrences_content += 1
                         # One doc, if doc is from the current file, add it to the list of entries
                         # ALWAYS RETURNS EMPTY
@@ -74,22 +75,57 @@ class IRSystem(IRSystemABC):
                         else:
                             # print("We have not encountered this file before")
                             entry[0].relevant_docs_content = [file_path]
+
                     # if we did not encounter this word before, then add it to the list of words
                     else:
                         word = Word(single_word, 1)
                         word.relevant_docs.append([file_path])
-                        print(Utility.print_word_contents(word))
                         self.list_words.append(word)
-        # revert directory
-        change_directory_files(cwd)
+
+                # TODO: Add Word Snippets Implementation
+                file_build_word.seek(0)
+                word_list_for_snippets = []  # Retrieves all the words from a line
+                for line in file_build_word:  # iterate through all lines in the
+                    line = re.sub("[^a-zA-Z0-9\s]+", " ",
+                                  line).lower()  # file and store single words comma separated in an array
+                    line = line.split()
+                    word_list_for_snippets += line
+                # print(word_list_for_snippets)
+                self.sliding_window(word_list_for_snippets)  # Implements word snippets
+
+            #     After looking at the first file, we expect the words to already have instances. Iterate
+            # through the word_snippets, at each middle point, we can add the list of words to that word.
+            # file_build_word.close()
+        change_directory_files(cwd)  # revert directory
 
         super().words_total_count()
         print("Completed processing all files")
 
         # for item in self.list_words.retrieve_word_list:
         # DO NOT REMOVE BELOW, USED TO REFERENCE AN OBJECT
-        # for w in self.list_words:
-        #     print(w.text_value_content)
+        for w in self.list_words:
+            print(w.text_value_content)
+            print(w.word_snippets_content)
+            print(w.relevant_docs_content)
+            print(w.num_occurrences_content)
+
+    # Note at this time, it voids 4 words in each file
+    def sliding_window(self, list_string_of_doc: [str]) -> None:
+        snips_list = list(zip(*[list_string_of_doc[i:] for i in range(Constant.SLIDING_WINDOW_SIZE)]))
+        # print("sliding_window -> snips_list: ", snips_list)
+
+        for dummy in snips_list:
+            # print("sliding_window -> dummy: ", dummy)
+            middle_int = int(len(dummy) / 2)
+            middle_word = dummy[middle_int]
+
+            word_search = self.word_search(middle_word)  # holds a list of the instance of Word
+            # if the word exists, then do some logic
+            if len(word_search):
+                current_word = word_search[0]
+                # print("sliding_window -> current word: ", current_word.text_value_content)
+                current_word.word_snippets.append(dummy)
+                # print("sliding_window -> current word: ", current_word.text_value_content)
 
     def word_search(self, word: str) -> list[Word]:
         """
@@ -99,10 +135,6 @@ class IRSystem(IRSystemABC):
         :return: list of word instance
         """
         # print("|| In Word Search ||")
-        # for w in self.list_words:
-        #     if w.text_value_content == word:
-        #         print("REPEATING:" + w.text_value_content)
-        #         # Utility.print_word_contents(w)
         return [w for w in self.list_words if w.text_value_content == word]
 
     # TODO: Fix so specific queries can return ALL possible results and not a union
@@ -113,7 +145,8 @@ class IRSystem(IRSystemABC):
         :return an overlap list of strings
         """
         print("|| Query Search ||")
-        words = query.split()
+        words = re.sub("[^a-zA-Z0-9\s]+", " ", query)
+        words = words.split()
         print(f"Inside IRSystem, QUERY SEARCH Function, Words: {words}")
         results_files = []
 
@@ -132,13 +165,16 @@ class IRSystem(IRSystemABC):
                 # print("WordSearch[0].relevant_docs_content:", {word_search[0].relevant_docs_content})
                 results_files.append(word_search[0].relevant_docs_content)
 
-        # overlap all the lists for the words then return only the overlap
+        # overlap all the lists for the words then return only the overlap(INNER JOIN)
         # if there is no overlap, then the list will be empty
         overlap = []
         if len(results_files):
-            overlap = set(results_files[0]).intersection(*results_files[1:])
+            # overlap = set(results_files[0]).intersection(*results_files[1:])
+            overlap = set(results_files[0]).union(*results_files[1:])
         return overlap
 
+    # TODO: Investigate bug where word frequency returns different results depending on how many times a word is
+    #  looked up AND why "iron-heart" -> "iron" "heart" do not return values
     def word_frequency(self, query_freq: str) -> int:
         """
         Returns the frequency of a word
@@ -148,7 +184,8 @@ class IRSystem(IRSystemABC):
         :return: frequency/number of occurrences as an integer
         """
         print("|| Word Frequency ||")
-        words = query_freq.split()
+        words = re.sub("[^a-zA-Z0-9\s]+", " ", query_freq)
+        words = words.split()
         entry = []
         for dummy in words:  # Strings
             entry = self.word_search(dummy)  # a list of Word
@@ -157,3 +194,13 @@ class IRSystem(IRSystemABC):
             return entry[0].num_occurrences_content * 100 / self.total
         # else:
         #     print("No results found in word_search when checking for word_frequency")
+
+    def word_snippets_collection(self, query_snips: str) -> [str]:
+        words = re.sub("[^a-zA-Z0-9\s]+", " ", query_snips)
+        words = words.split()
+        results_snips = []
+        for dummy in words:  # Strings
+            word_search = self.word_search(dummy)  # holds a list of the instance of Word
+            if len(word_search):
+                results_snips.append(word_search[0].word_snippets_content)
+        return results_snips
