@@ -36,6 +36,6 @@ class Utility:
         for res in args:
             print("list_relevant_docs: ", res.list_relevant_docs_content)
             print("frequency: ", res.frequency_content)
-            print("text_string: ", res.text_string_content, "\n")
+            print("text_string: ", res.text_string_content)
             print("word_snippets: ", res.word_snippets_content, "\n")
 

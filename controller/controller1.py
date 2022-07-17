@@ -34,6 +34,7 @@ class Controller1:
         Given word from input, returns available data to user
         :return: json string
         """
+        self.process_files()
         query = list(self.irsystem.query_search(word))
         freq = self.irsystem.word_frequency(word)
         snips = self.irsystem.word_snippets_collection(word)
@@ -42,4 +43,5 @@ class Controller1:
         return response.toJSON()
 
     def get_lucky_list(self):
+        self.process_files()
         return self.irsystem.list_words

@@ -2,8 +2,6 @@ import json
 
 
 class Result:
-    """
-    """
 
     def __init__(self,
                  list_relevant_docs: [str],
@@ -19,10 +17,14 @@ class Result:
 
     @property
     def word_snippets_content(self) -> [str]:
+        # print("IN RES -> GETTER: ", self.word_snippets_content)
         return self._word_snippets
 
     @word_snippets_content.setter
     def word_snippets_content(self, snips_list: [str]) -> None:
+        # if self.word_snippets_content is not None:
+        #     del self._word_snippets
+        # print("IN RES -> ", self.word_snippets_content)
         self._word_snippets.append(snips_list)
 
     @word_snippets_content.deleter

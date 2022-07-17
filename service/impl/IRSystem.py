@@ -135,7 +135,11 @@ class IRSystem(IRSystemABC):
         :return: list of word instance
         """
         # print("|| In Word Search ||")
-        return [w for w in self.list_words if w.text_value_content == word]
+        w_list = []
+        for w in self.list_words:
+            if w.text_value_content == word:
+                w_list.append(w)
+        return w_list
 
     # TODO: Fix so specific queries can return ALL possible results and not a union
     def query_search(self, query: str) -> [str]:
@@ -157,7 +161,7 @@ class IRSystem(IRSystemABC):
             # print("Word Instance in Query: ", word_search[0].num_occurrences_content)
             # if the word exists, then add the list of files to the results
             if len(word_search):
-                #     one_doc = Utility.collect_one_relevant_document(self)
+                # one_doc = Utility.collect_one_relevant_document(self)
                 # results_files.append(word_search[0].one_doc) # references
                 # print("WordSearch[0]:", {Utility.print_word_contents(word_search[0])})
                 # print(len(word_search))
@@ -195,12 +199,16 @@ class IRSystem(IRSystemABC):
         # else:
         #     print("No results found in word_search when checking for word_frequency")
 
+    # Comes back duplicated
     def word_snippets_collection(self, query_snips: str) -> [str]:
         words = re.sub("[^a-zA-Z0-9\s]+", " ", query_snips)
         words = words.split()
         results_snips = []
+
+        print("irs -> word_snippets_collection -> res_snips: ", results_snips)
         for dummy in words:  # Strings
             word_search = self.word_search(dummy)  # holds a list of the instance of Word
             if len(word_search):
                 results_snips.append(word_search[0].word_snippets_content)
+        print("IRS -> WS_Collection -> ", results_snips)
         return results_snips
