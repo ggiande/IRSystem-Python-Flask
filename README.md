@@ -58,9 +58,11 @@ Start this particular Kivy Application by running, `python3 main.py` after pasti
 After running the application, you should see the following:
 ![Kivy Application Launched](https://i.imgur.com/yS8FWOO.png)
 
+- For more regex information, visit: https://www.dataquest.io/wp-content/uploads/2019/03/python-regular-expressions-cheat-sheet.pdf
+
 ## Future Optimizations
-- [X] Render different screens based on logic of input and retrieval
-- [ ] Implement a more advanced word_search for substrings using dijkstra's algorithm, substrings
-- [ ] Implement self snippets functionality of viewing words near the found self
-- [ ] Implement a back button
-- [X] Fix bug of overlapping files
+- [ ] A more advanced word_search for substrings using dijkstra's algorithm, substrings
+- [ ] Refactor Result object to ResultEncoder using JSON library
+- [ ] Revisit unit tests
+- [ ] Implement for list comprehensions
+

@@ -14,7 +14,7 @@ from utils import Constant
 def change_directory_files(cwd):
     try:
         os.chdir(cwd)
-        print("Inserting inside-", os.getcwd())
+        # print("Inserting inside-", os.getcwd())
     except OSError:
         print("Something wrong with specified\
               directory. Exception- ", sys.exc_info())
@@ -134,7 +134,6 @@ class IRSystem(IRSystemABC):
         If so, it collects a list of words
         :return: list of word instance
         """
-        # print("|| In Word Search ||")
         w_list = []
         for w in self.list_words:
             if w.text_value_content == word:
@@ -151,7 +150,7 @@ class IRSystem(IRSystemABC):
         print("|| Query Search ||")
         words = re.sub("[^a-zA-Z0-9\s]+", " ", query)
         words = words.split()
-        print(f"Inside IRSystem, QUERY SEARCH Function, Words: {words}")
+        # print(f"Inside IRSystem, QUERY SEARCH Function, Words: {words}")
         results_files = []
 
         # search for each word in the query and return the list of files for that word
@@ -205,10 +204,10 @@ class IRSystem(IRSystemABC):
         words = words.split()
         results_snips = []
 
-        print("irs -> word_snippets_collection -> res_snips: ", results_snips)
+        # print("irs -> word_snippets_collection -> res_snips: ", results_snips)
         for dummy in words:  # Strings
             word_search = self.word_search(dummy)  # holds a list of the instance of Word
             if len(word_search):
                 results_snips.append(word_search[0].word_snippets_content)
-        print("IRS -> WS_Collection -> ", results_snips)
+        # print("IRS -> WS_Collection -> ", results_snips)
         return results_snips
