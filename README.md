@@ -65,4 +65,5 @@ After running the application, you should see the following:
 - [ ] Refactor Result object to ResultEncoder using JSON library
 - [ ] Revisit unit tests
 - [ ] Implement for list comprehensions
+- [ ] Refactor all packages
 
