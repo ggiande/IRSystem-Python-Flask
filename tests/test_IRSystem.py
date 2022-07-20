@@ -29,6 +29,9 @@ class TestIRSystem(TestCase):
     def test_build_system(self):
         self.fail()
 
+    def test_sliding_window(self):
+        self.fail()
+
     def test_word_search(self):
         """
         Check to see if a string is already in a Word Instance
@@ -78,4 +81,13 @@ class TestIRSystem(TestCase):
         irs.total = 3
         self.assertEqual(100, irs.word_frequency("Hello"))
 
+    def test_word_snippets_collection(self):
+        irs = IRSystem()
+        irs.list_words = []
+        w_expected_one = Word("Hello", 3)
+        w_expected_one.relevant_docs.append(["S", 1])
+        w_expected_one.word_snippets.append("Hello I am Gian")
+        irs.list_words.append(w_expected_one)
+        irs.total = 3
+        self.assertEqual(["Hello I am Gian"], irs.word_snippets_collection("Hello")[0])
 

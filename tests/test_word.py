@@ -1,6 +1,8 @@
 import unittest
 from model.word import Word
 
+# Traditionally, models do NOT have unit tests.
+
 
 class TestWord(unittest.TestCase):
 

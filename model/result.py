@@ -75,9 +75,3 @@ class Result:
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-
-    def deconstructResult(self) -> None:
-        del self.list_relevant_docs_content
-        del self.frequency_content
-        del self._text_string
-        del self.word_snippets_content
