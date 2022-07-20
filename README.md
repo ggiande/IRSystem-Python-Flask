@@ -33,6 +33,7 @@ Activate the virtual environment.
 Start this particular Flask App by running, `python3 main.py` after pasting the venv codeblock.
 
 Start Flask by clicking the run button in main().
+DO NOT REMOVE **requirements.txt** it is a required file for most editors to know the versions of the dependencies to install.
 
 ## Future Optimizations
 - [ ] A more advanced word_search for substrings using dijkstra's algorithm, substrings
