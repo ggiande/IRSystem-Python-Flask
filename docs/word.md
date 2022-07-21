@@ -1,0 +1,2 @@
+# Word
+Word is the main object that stores an instance of itself and acts as a list of an inverted data structure. Since Word contains the relevant_docs, string values, word_snippets surrounding its occurrence and number of occurrences in the project, then we can utilize words as an Inverted Index DS. Word implements the `@property` decorators for the setters and getters of the attributes.

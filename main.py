@@ -18,8 +18,10 @@ def ping_health_check():
 @app.route("/example", methods=['GET'])
 def query_example() -> str:
     print("FLASK -> Example Endpoint")
-    word = "cannon"
+    word = "images"
     response = first_call(word)
+    print("RESPONSE: ", response)
+
     return response
 
 
@@ -27,6 +29,7 @@ def query_example() -> str:
 def adhoc_query(word: str) -> str:
     print("FLASK -> adhoc_query Endpoint")
     response = callback(word)
+    print("RESPONSE: ", response)
     return response
 
 
@@ -38,6 +41,7 @@ def query_lucky_word() -> str:
     random_word = random.choice(list_text_of_words)  # holds a word
     word = random_word.text_value_content
     response = callback(word)
+    print("RESPONSE: ", response)
     return response
 
 
