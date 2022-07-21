@@ -1,8 +1,7 @@
 from unittest import TestCase
-
 from service.impl.IRSystem import IRSystem
 from model.word import Word
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 
 
 def create_word_instance() -> Word:
@@ -27,10 +26,20 @@ class TestIRSystem(TestCase):
     mock = Mock()
 
     def test_build_system(self):
-        self.fail()
+        irs = IRSystem()
+        irs.build_system = MagicMock(name='method')
+        irs.build_system("AMD-Chip-on-Android-Studio:README.md")
+        self.assertEqual(irs.build_system.call_count, 1)
 
     def test_sliding_window(self):
-        self.fail()
+        irs = IRSystem()
+        w_expected_one = Word("now", 1)
+        irs.list_words.append(w_expected_one)
+        irs.sliding_window(
+            ['https', 'packagephobia', 'now', 'sh', 'badge', 'p', 'node', 'fetch', 'https', 'packagephobia', 'now',
+             'sh', 'result', 'p', 'node', 'fetch', 'phin', 'phin', 'package', 'size', 'https', 'packagephobia', 'now',
+             'sh', 'badge', 'p', 'phin', 'https', 'packagephobia', 'now', 'sh', 'result', 'p', 'phin'])
+        self.assertEqual(('https', 'packagephobia', 'now', 'sh', 'badge'), w_expected_one.word_snippets[0])
 
     def test_word_search(self):
         """
@@ -90,4 +99,3 @@ class TestIRSystem(TestCase):
         irs.list_words.append(w_expected_one)
         irs.total = 3
         self.assertEqual(["Hello I am Gian"], irs.word_snippets_collection("Hello")[0])
-

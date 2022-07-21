@@ -58,7 +58,7 @@ class IRSystem(IRSystemABC):
                                   line).lower()  # file and store single words comma separated in an array
                     line = line.split()
                     word_list += line
-
+                # print("Word List: ", word_list)
                 # Sends a word into word_search
                 for single_word in word_list:  # iterate through single words
                     # Check if the word exists in the list of words
@@ -111,6 +111,7 @@ class IRSystem(IRSystemABC):
         :param list_string_of_doc: the list of files to traverse
         :return:
         """
+        # print("sliding_window -> list_string_of_doc: ", list_string_of_doc)
         snips_list = list(zip(*[list_string_of_doc[i:] for i in range(Constant.SLIDING_WINDOW_SIZE)]))
         # print("sliding_window -> snips_list: ", snips_list)
 
@@ -118,8 +119,9 @@ class IRSystem(IRSystemABC):
             # print("sliding_window -> dummy: ", dummy)
             middle_int = int(len(dummy) / 2)
             middle_word = dummy[middle_int]
-
+            # print("middlw word", middle_word)
             word_search = self.word_search(middle_word)  # holds a list of the instance of Word
+            # print("word search", word_search[0].word_snippets_content)
             # if the word exists, then do some logic
             if len(word_search):
                 current_word = word_search[0]
@@ -158,7 +160,7 @@ class IRSystem(IRSystemABC):
             # if the word exists, then add the list of files to the results
             if len(word_search):
                 results_files.append(word_search[0].relevant_docs_content)
-
+        # print("result files:", results_files)
         # overlap all the lists for the words then return only the overlap(INNER JOIN)
         # if there is no overlap, then the list will be empty
         overlap = []
